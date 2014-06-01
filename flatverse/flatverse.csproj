@@ -35,10 +35,13 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="flatverse\Collision\FlatverseCollisionException.cs" />
+    <Compile Include="flatverse\Collision\LineSegment.cs" />
     <Compile Include="flatverse\Drawable\Drawable.cs" />
     <Compile Include="flatverse\Drawable\FVImage.cs" />
     <Compile Include="flatverse\Drawable\LineDrawable.cs" />
     <Compile Include="flatverse\Drawable\TextureDrawable.cs" />
+    <Compile Include="flatverse\FlatverseException.cs" />
     <Compile Include="flatverse\GameObj.cs" />
     <Compile Include="flatverse\Utils.cs" />
     <Compile Include="flatverse\XNAInterface.cs" />
