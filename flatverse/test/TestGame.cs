@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace flatverse
 {
@@ -16,6 +17,13 @@ namespace flatverse
 
         Dictionary<string, FVImage> textures;
         List<GameObj> objs = new List<GameObj>();
+
+        List<LineSegment> segments = new List<LineSegment>();
+        List<Drawable> segDbls = new List<Drawable>();
+        LineSegment moving;
+        Drawable movingDbl, dotA;
+
+        float velMag = 5;
 
         public TestGame()
         {
@@ -51,10 +59,65 @@ namespace flatverse
             objs.Add(new GameObj(216, 216, redDot1));
             objs.Add(new GameObj(192, 192, window));
             objs.Add(new GameObj(200, 200, line));
+
+            Vector2 a = new Vector2(400, 200);
+            Vector2 d = new Vector2(0, 200);
+            Vector2 r = new Vector2(200, 0);
+
+            //
+            dotA = redDot0.clone();
+            dotA.depth = .4f;
+
+            moving = new LineSegment(a + new Vector2(20, 20), a + d + r);
+            segments.Add(new LineSegment(a, a + r));
+            segments.Add(new LineSegment(a, a + d));
+            segments.Add(new LineSegment(a, a + (d + r)));
+
+            movingDbl = new LineDrawable(textures["pixel"], d + r, .7f);
+            movingDbl.color = Color.Green;
+            segDbls.Add(new LineDrawable(textures["pixel"], r, .8f));
+            segDbls.Add(new LineDrawable(textures["pixel"], d, .8f));
+            segDbls.Add(new LineDrawable(textures["pixel"], d + r, .8f));
         }
 
         public void update(GameTime gameTime)
         {
+            //
+            Vector2 vel = Vector2.Zero;
+            if (Keyboard.GetState().IsKeyDown(Keys.A))
+            {
+                vel.X -= velMag;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.D))
+            {
+                vel.X += velMag;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.S))
+            {
+                vel.Y += velMag;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.W))
+            {
+                vel.Y -= velMag;
+            }
+
+            moving += vel;
+
+            // collision
+            for (int i = 0; i < segments.Count; i++)
+            {
+                LineSegment seg = segments[i];
+                if (seg.intersects(moving))
+                {
+                    segDbls[i].color = Color.Red;
+                }
+                else
+                {
+                    segDbls[i].color = Color.White;
+                }
+            }
+            //
+
             foreach(GameObj obj in objs) {
                 obj.update();
             }
@@ -71,7 +134,16 @@ namespace flatverse
                 obj.draw(sb);
             }
 
-            //spriteBatch.Draw(textures["pixel"], new Vector2(400, 400), null, Color.Gray, 0, pos, scale, SpriteEffects.None, depth);
+            movingDbl.simpleDraw(sb, moving.getA());
+            dotA.simpleDraw(sb, moving.getA());
+            dotA.simpleDraw(sb, moving.getB());
+            for (int i = 0; i < segDbls.Count; i++)
+            {
+                LineSegment seg = segments[i];
+                segDbls[i].simpleDraw(sb, seg.getA());
+                dotA.simpleDraw(sb, seg.getA());
+                dotA.simpleDraw(sb, seg.getB());
+            }
 
             sb.End();
         }

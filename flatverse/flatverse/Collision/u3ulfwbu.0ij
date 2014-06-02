@@ -3,10 +3,6 @@ using Microsoft.Xna.Framework;
 
 namespace flatverse
 {
-    /*
-     * TODO - change topMost leftMost etc. to topLeft topRight bottomLeft bottomRight
-     *        that way a point w/o a NaN can always be provided
-     */
     public class LineSegment
     {
         private Vector2 a, b;
@@ -128,55 +124,13 @@ namespace flatverse
 
         public bool intersects(LineSegment line)
         {
-            LineSegmentRep otherRep = line.getLineRep();
-            if (otherRep.isHorizontal())
-            {
-                return lineRep.intersects((HorLineSegment)otherRep);
-            }
-            else if (otherRep.isVertical())
-            {
-                return lineRep.intersects((VertLineSegment)otherRep);
-            }
-            else
-            {
-                return lineRep.intersects((NonAxisAlignedLineSegment)otherRep);
-            }
-        }
-
-        public bool isVertical()
-        {
-            return lineRep.isVertical();
-        }
-
-        public bool isHorizontal()
-        {
-            return lineRep.isHorizontal();
-        }
-
-        public void move(Vector2 delta)
-        {
-            a += delta;
-            b += delta;
-            lineRep.move(delta);
-        }
-
-        public static LineSegment operator +(LineSegment line, Vector2 delta)
-        {
-            line.move(delta);
-            return line;
-        }
-
-        public static LineSegment operator -(LineSegment line, Vector2 delta)
-        {
-            delta = -delta;
-            line.move(delta);
-            return line;
+            return lineRep.intersects(line.getLineRep());
         }
 
         /*
          * Interface for line segment representations used by this class
          */
-        public interface LineSegmentRep
+        private interface LineSegmentRep
         {
             float left();
             float right();
@@ -205,7 +159,7 @@ namespace flatverse
         /*
          * Horizontal line representation
          */
-        public class HorLineSegment : LineSegmentRep
+        private class HorLineSegment : LineSegmentRep
         {
             private float y, leftX, rightX;
 
@@ -355,7 +309,7 @@ namespace flatverse
         /*
          * Vertical line representation
          */
-        public class VertLineSegment : LineSegmentRep
+        private class VertLineSegment : LineSegmentRep
         {
             private float x, topY, botY;
 
@@ -471,7 +425,7 @@ namespace flatverse
             public bool intersects(NonAxisAlignedLineSegment line)
             {
                 float yIntersection = line.yAt(x);
-                return containsY(yIntersection);
+                return yIntersection != float.NaN && containsY(yIntersection);
             }
 
             public bool intersects(VertLineSegment line)
@@ -505,7 +459,7 @@ namespace flatverse
         /*
          * Non - axis aligned line segment representation (A.K.A. not vertical or horizontal)
          */
-        public class NonAxisAlignedLineSegment : LineSegmentRep
+        private class NonAxisAlignedLineSegment : LineSegmentRep
         {
             private Vector2 a, b;
             private float slp, yIcpt;
@@ -620,7 +574,7 @@ namespace flatverse
             {
                 float y = (x * slp) + yIcpt;
 
-                if (y > bottom() || y < top())
+                if (y < bottom() || y > top())
                 {
                     return float.NaN;
                 }
@@ -670,7 +624,7 @@ namespace flatverse
 
                 float intersectionX = (line.yIntercept() - yIcpt) / (slp - line.slope());
 
-                return containsX(intersectionX) && line.containsX(intersectionX);
+                return line.containsX(intersectionX);
             }
 
             public bool intersects(VertLineSegment line)

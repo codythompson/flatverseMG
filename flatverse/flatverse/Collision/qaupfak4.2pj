@@ -471,7 +471,7 @@ namespace flatverse
             public bool intersects(NonAxisAlignedLineSegment line)
             {
                 float yIntersection = line.yAt(x);
-                return containsY(yIntersection);
+                return yIntersection != float.NaN && containsY(yIntersection);
             }
 
             public bool intersects(VertLineSegment line)
