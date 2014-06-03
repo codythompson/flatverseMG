@@ -5,31 +5,41 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace flatverse
 {
+    // TODO mov pos and prevPos to controller
+
+    //public class GameObj<C> where C : Controller
     public class GameObj
     {
         public List<Drawable> dbls;
 
+        //protected C controller;
+        protected Controller controller;
         protected Vector2 pos, prevPos;
 
-        public GameObj(Vector2 initialPos, List<Drawable> dbls)
+        //public GameObj(C controller, Vector2 initialPos, List<Drawable> dbls)
+        public GameObj(Controller controller, Vector2 initialPos, List<Drawable> dbls)
         {
+            this.controller = controller;
             pos = initialPos;
             prevPos = initialPos;
             this.dbls = dbls;
         }
 
-        public GameObj(Vector2 initialPos, Drawable dbl)
-            : this(initialPos, new List<Drawable>())
+        //public GameObj(C controller, Vector2 initialPos, Drawable dbl)
+        public GameObj(Controller controller, Vector2 initialPos, Drawable dbl)
+            : this(controller, initialPos, new List<Drawable>())
         {
             dbls.Add(dbl);
         }
 
-        public GameObj(float x, float y, List<Drawable> dbls)
-            : this(new Vector2(x, y), dbls)
+        //public GameObj(C controller, float x, float y, List<Drawable> dbls)
+        public GameObj(Controller controller, float x, float y, List<Drawable> dbls)
+            : this(controller, new Vector2(x, y), dbls)
         {}
 
-        public GameObj(float x, float y, Drawable dbl)
-            : this(x, y, new List<Drawable>())
+        //public GameObj(C controller, float x, float y, Drawable dbl)
+        public GameObj(Controller controller, float x, float y, Drawable dbl)
+            : this(controller, x, y, new List<Drawable>())
         {
             dbls.Add(dbl);
         }
@@ -41,6 +51,8 @@ namespace flatverse
                 dbl.update();
             }
 
+            controller.update();
+            pos += controller.deltaP();
             prevPos = pos;
         }
 
@@ -59,28 +71,10 @@ namespace flatverse
         {
             return pos;
         }
-        public virtual void setPos(Vector2 pos)
-        {
-            this.pos = pos;
-        }
-        public virtual void addToPos(Vector2 delta)
-        {
-            pos += delta;
-        }
-        public virtual void multiplyPosBy(Vector2 multiplier)
-        {
-            pos *= multiplier;
-        }
-        public virtual void multiplyPosBy(float factor)
-        {
-            pos *= factor;
-        }
 
         public virtual Vector2 getPrevPos()
         {
             return prevPos;
         }
-
-
     }
 }

@@ -55,10 +55,13 @@ namespace flatverse
 
             Drawable window = new TextureDrawable(textures["window"], .5f);
 
-            objs.Add(new GameObj(200, 200, redDot0));
-            objs.Add(new GameObj(216, 216, redDot1));
-            objs.Add(new GameObj(192, 192, window));
-            objs.Add(new GameObj(200, 200, line));
+            KinematicController cont = new KinematicController(new Vector2(0, .0001f));
+            InputController iCont = new InputController();
+
+            objs.Add(new GameObj(cont, 200, 200, redDot0));
+            objs.Add(new GameObj(cont, 216, 216, redDot1));
+            objs.Add(new GameObj(iCont, 192, 192, window));
+            objs.Add(new GameObj(cont, 200, 200, line));
 
             Vector2 a = new Vector2(400, 200);
             Vector2 d = new Vector2(0, 200);
