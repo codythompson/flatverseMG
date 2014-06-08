@@ -19,7 +19,7 @@ namespace flatverse
         public GraphicsDeviceManager graphics;
         public SpriteBatch spriteBatch;
 
-        public XNAInterface gameInterface = new TestGame();
+        public XNAInterface gameInterface = new TestGame2();
 
         public Game1()
             : base()

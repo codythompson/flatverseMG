@@ -35,6 +35,8 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="flatverse\Drawable\DrawableCollection.cs" />
+    <Compile Include="flatverse\Drawable\RectDrawable.cs" />
     <Compile Include="flatverse\GameObj\Collision\FlatverseCollisionException.cs" />
     <Compile Include="flatverse\GameObj\Collision\LineSegment.cs" />
     <Compile Include="flatverse\Drawable\Drawable.cs" />
@@ -42,6 +44,8 @@
     <Compile Include="flatverse\Drawable\LineDrawable.cs" />
     <Compile Include="flatverse\Drawable\TextureDrawable.cs" />
     <Compile Include="flatverse\FlatverseException.cs" />
+    <Compile Include="flatverse\GameObj\Collision\Polygon.cs" />
+    <Compile Include="flatverse\GameObj\Collision\Rectangle.cs" />
     <Compile Include="flatverse\GameObj\Controller\Controller.cs" />
     <Compile Include="flatverse\GameObj\Controller\InputController.cs" />
     <Compile Include="flatverse\GameObj\Controller\KinematicController.cs" />
@@ -52,6 +56,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="test\TestGame.cs" />
+    <Compile Include="test\TestGame2.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

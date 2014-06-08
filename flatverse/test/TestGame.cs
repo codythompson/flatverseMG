@@ -23,6 +23,9 @@ namespace flatverse
         LineSegment moving;
         Drawable movingDbl, dotA;
 
+        FVRectangle tRect = new FVRectangle(600, 200, 100, 55);
+        Drawable tRectDbl;
+
         float velMag = 5;
 
         public TestGame()
@@ -71,7 +74,7 @@ namespace flatverse
             dotA = redDot0.clone();
             dotA.depth = .4f;
 
-            moving = new LineSegment(a + new Vector2(20, 20), a + d + r);
+            moving = new LineSegment(a + new Vector2(20, 20), a + new Vector2(30, 40));
             segments.Add(new LineSegment(a, a + r));
             segments.Add(new LineSegment(a, a + d));
             segments.Add(new LineSegment(a, a + (d + r)));
@@ -81,6 +84,8 @@ namespace flatverse
             segDbls.Add(new LineDrawable(textures["pixel"], r, .8f));
             segDbls.Add(new LineDrawable(textures["pixel"], d, .8f));
             segDbls.Add(new LineDrawable(textures["pixel"], d + r, .8f));
+
+            tRectDbl = new RectDrawable(textures["pixel"], 100, 55, .8f);
         }
 
         public void update(GameTime gameTime)
@@ -119,6 +124,14 @@ namespace flatverse
                     segDbls[i].color = Color.White;
                 }
             }
+            if (tRect.intersects(moving))
+            {
+                tRectDbl.color = Color.Red;
+            }
+            else
+            {
+                tRectDbl.color = Color.White;
+            }
             //
 
             foreach(GameObj obj in objs) {
@@ -147,6 +160,7 @@ namespace flatverse
                 dotA.simpleDraw(sb, seg.getA());
                 dotA.simpleDraw(sb, seg.getB());
             }
+            tRectDbl.simpleDraw(sb, tRect.topLeft());
 
             sb.End();
         }
