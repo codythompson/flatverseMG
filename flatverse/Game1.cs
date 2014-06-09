@@ -25,6 +25,7 @@ namespace flatverse
             : base()
         {
             graphics = new GraphicsDeviceManager(this);
+            gameInterface.setResolution(graphics);
             Content.RootDirectory = "Content";
         }
 

@@ -6,6 +6,7 @@ namespace flatverse
 {
     public interface XNAInterface
     {
+        void setResolution(GraphicsDeviceManager graphics);
         void initialize(Game1 xnaGame);
         void loadContent(ContentManager contentManager);
         //void unloadContent();

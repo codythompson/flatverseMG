@@ -29,6 +29,12 @@ namespace flatverse
             textures = new Dictionary<string, FVImage>();
         }
 
+        public void setResolution(GraphicsDeviceManager gdm)
+        {
+            gdm.PreferredBackBufferWidth = 1200;
+            gdm.PreferredBackBufferHeight = 800;
+        }
+
         public void initialize(Game1 xnaGame)
         {
             this.xnaGame = xnaGame;
@@ -36,7 +42,7 @@ namespace flatverse
 
         public void loadContent(ContentManager contentManager)
         {
-            gd = xnaGame.GraphicsDevice;
+            gd = xnaGame.graphics.GraphicsDevice;
             sb = xnaGame.spriteBatch;
 
             textures["pixel"] = new FVImage(contentManager.Load<Texture2D>("1x1"), null);

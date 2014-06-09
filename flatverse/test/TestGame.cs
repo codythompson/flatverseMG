@@ -33,6 +33,11 @@ namespace flatverse
             textures = new Dictionary<string, FVImage>();
         }
 
+        public void setResolution(GraphicsDeviceManager gdm)
+        {
+
+        }
+
         public void initialize(Game1 xnaGame)
         {
             this.xnaGame = xnaGame;
@@ -58,7 +63,7 @@ namespace flatverse
 
             Drawable window = new TextureDrawable(textures["window"], .5f);
 
-            KinematicController cont = new KinematicController(new Vector2(0, .0001f));
+            Controller cont = new Controller(new Vector2(0, .0001f));
             InputController iCont = new InputController();
 
             objs.Add(new GameObj(cont, 200, 200, redDot0));

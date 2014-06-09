@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace flatverse
 {
-    public class InputController : KinematicController
+    public class InputController : Controller
     {
         public Keys leftKey = Keys.A;
         public Keys rightKey = Keys.D;
