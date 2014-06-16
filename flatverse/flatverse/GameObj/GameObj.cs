@@ -10,31 +10,18 @@ namespace flatverse
         public List<Drawable> dbls;
 
         protected Controller controller;
-        protected Vector2 pos, prevPos;
 
         private List<Collider> colliders;
 
-        public GameObj(Controller controller, Vector2 initialPos, List<Drawable> dbls)
+        public GameObj(Controller controller, List<Drawable> dbls)
         {
             this.controller = controller;
-            pos = initialPos;
-            prevPos = initialPos;
             this.dbls = dbls;
             colliders = new List<Collider>();
         }
 
-        public GameObj(Controller controller, Vector2 initialPos, Drawable dbl)
-            : this(controller, initialPos, new List<Drawable>())
-        {
-            dbls.Add(dbl);
-        }
-
-        public GameObj(Controller controller, float x, float y, List<Drawable> dbls)
-            : this(controller, new Vector2(x, y), dbls)
-        {}
-
-        public GameObj(Controller controller, float x, float y, Drawable dbl)
-            : this(controller, x, y, new List<Drawable>())
+        public GameObj(Controller controller, Drawable dbl)
+            : this(controller, new List<Drawable>())
         {
             dbls.Add(dbl);
         }
@@ -47,15 +34,13 @@ namespace flatverse
             }
 
             controller.update();
-            pos += controller.deltaP();
-            prevPos = pos;
         }
 
         public virtual void draw(SpriteBatch spriteBatch)
         {
             foreach (Drawable dbl in dbls)
             {
-                dbl.simpleDraw(spriteBatch, getPos());
+                dbl.simpleDraw(spriteBatch, controller.getPos());
             }
         }
 
@@ -64,12 +49,12 @@ namespace flatverse
          */
         public virtual Vector2 getPos()
         {
-            return pos;
+            return controller.getPos();
         }
 
         public virtual Vector2 getPrevPos()
         {
-            return prevPos;
+            return controller.getPrevPos();
         }
     }
 }

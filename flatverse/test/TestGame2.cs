@@ -54,7 +54,7 @@ namespace flatverse
             dot.scale = new Vector2(4, 4);
             mainLineDelt = new Vector2(20, 30);
             Drawable lineD = new LineDrawable(textures["pixel"], mainLineDelt, 0.2f);
-            main = new GameObj(new InputController(), new Vector2(200, 50), lineD);
+            main = new GameObj(new InputController(new Vector2(200, 50)), lineD);
 
             Vector2[] pPts = new Vector2[5];
             pPts[0] = new Vector2(200, 200);

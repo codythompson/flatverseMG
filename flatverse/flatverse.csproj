@@ -48,6 +48,7 @@
     <Compile Include="flatverse\GameObj\Controller\Collision\LineSegmentCollider.cs" />
     <Compile Include="flatverse\GameObj\Controller\Collision\Polygon.cs" />
     <Compile Include="flatverse\GameObj\Controller\Collision\Rectangle.cs" />
+    <Compile Include="flatverse\GameObj\Controller\DeltaModifier.cs" />
     <Compile Include="flatverse\GameObj\Controller\InputController.cs" />
     <Compile Include="flatverse\GameObj\Controller\Controller.cs" />
     <Compile Include="flatverse\GameObj\Controller\SurfaceInformation.cs" />
