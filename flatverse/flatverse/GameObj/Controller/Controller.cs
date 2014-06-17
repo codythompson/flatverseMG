@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace flatverse
 {
@@ -10,24 +11,47 @@ namespace flatverse
 
         private Vector2 computedDeltaP;
 
-        public Controller() {
-            acceleration = Vector2.Zero;
-            velocity = Vector2.Zero;
-            explicitDeltaP = Vector2.Zero;
-        }
+        private Vector2 pos, prevPos;
 
-        public Controller(Vector2 acceleration)
+        private List<DeltaModifier> modifiers;
+
+        public Controller(Vector2 acceleration, Vector2 initialPos)
         {
             this.acceleration = acceleration;
             velocity = Vector2.Zero;
-            explicitDeltaP = Vector2.Zero;
+            pos = initialPos;
+            prevPos = initialPos;
+            modifiers = new List<DeltaModifier>();
         }
+
+        public Controller(Vector2 initialPos)
+            : this(Vector2.Zero, initialPos)
+        {}
 
         public virtual void update()
         {
+            prevPos = pos;
             velocity += acceleration;
-            computedDeltaP = explicitDeltaP + velocity;
+            computedDeltaP = velocity;
+            computedDeltaP += explicitDeltaP;
+            foreach (DeltaModifier mod in modifiers)
+            {
+                computedDeltaP = mod.modifyDelta(pos, computedDeltaP);
+            }
+            pos += computedDeltaP;
+
             explicitDeltaP = Vector2.Zero;
+            modifiers.Clear();
+        }
+
+        public virtual Vector2 getPos()
+        {
+            return pos;
+        }
+
+        public virtual Vector2 getPrevPos()
+        {
+            return prevPos;
         }
 
         public virtual Vector2 deltaP()
@@ -55,14 +79,14 @@ namespace flatverse
             this.velocity = velocity;
         }
 
-        public virtual void addToExplicitDeltaP(Vector2 deltaDeltaP)
+        public virtual void addDeltaModifier(DeltaModifier modifier)
         {
-            explicitDeltaP += deltaDeltaP;
+            modifiers.Add(modifier);
         }
 
-        public virtual void setExplicitDeltaP(Vector2 explicitDeltaP)
+        public virtual void addExplicitDeltaP(Vector2 explicitDeltaP)
         {
-            this.explicitDeltaP = explicitDeltaP;
+            this.explicitDeltaP += explicitDeltaP;
         }
     }
 }

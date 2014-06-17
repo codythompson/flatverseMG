@@ -14,8 +14,8 @@ namespace flatverse
         private bool leftDownFirst, upDownFirst;
         private bool leftDown, rightDown, upDown, downDown;
 
-        public InputController()
-            : base()
+        public InputController(Vector2 initialPos)
+            : base(initialPos)
         {}
 
         public override void update()
