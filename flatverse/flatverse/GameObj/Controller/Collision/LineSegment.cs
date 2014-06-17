@@ -160,6 +160,11 @@ namespace flatverse
             lineRep.move(delta);
         }
 
+        public LineSegment clone()
+        {
+            return new LineSegment(a, b);
+        }
+
         public static LineSegment operator +(LineSegment line, Vector2 delta)
         {
             line.move(delta);

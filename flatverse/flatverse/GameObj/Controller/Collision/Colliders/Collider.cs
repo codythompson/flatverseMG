@@ -7,8 +7,7 @@ namespace flatverse
     {
         public int weightClass;
         public Vector2 offset;
-        protected Vector2 deltaP;
-        protected SurfaceInformation surfaceInformation;
+        //protected SurfaceInformation surfaceInformation;
 
         public Collider(Vector2 offset, int weightClass)
         {
@@ -18,18 +17,18 @@ namespace flatverse
 
         public abstract void initialize(Vector2 ownerPos);
         public abstract void move(Vector2 deltaP);
-        public virtual void update()
+        public abstract float moveHalfBack();
+        public abstract float moveHalfForward();
+        public abstract void moveToOriginal();
+        public abstract Polygon getCollisionPath();
+        public abstract bool intersects(Polygon collisionPath);
+        public virtual void collideAway(Collider other)
         {
-            deltaP = Vector2.Zero;
+            if (other.weightClass >= weightClass)
+            {
+                FlatverseCollisionException.throwAwayWeightClassException(this, weightClass, other.weightClass);
+            }
         }
-        public abstract void collide(Collider other);
-        public virtual void addDeltaP(Vector2 deltaP)
-        {
-            this.deltaP += deltaP;
-        }
-        public virtual Vector2 getDeltaP()
-        {
-            return deltaP;
-        }
+
     }
 }

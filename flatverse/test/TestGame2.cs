@@ -24,6 +24,8 @@ namespace flatverse
         Polygon tP;
         DrawableCollection tpds;
 
+        GameObj collA;
+
         public TestGame2()
         {
             textures = new Dictionary<string, FVImage>();
@@ -54,7 +56,15 @@ namespace flatverse
             dot.scale = new Vector2(4, 4);
             mainLineDelt = new Vector2(20, 30);
             Drawable lineD = new LineDrawable(textures["pixel"], mainLineDelt, 0.2f);
-            main = new GameObj(new InputController(new Vector2(200, 50)), lineD);
+            main = new GameObj(new DEBUG_CONTROLLER(new Vector2(200, 50)), lineD);
+            main.addCollider(new LineSegmentCollider(mainLineDelt, Vector2.Zero, 1));
+
+            Vector2 collADelt = new Vector2(100, -150);
+            Drawable collADbl = new LineDrawable(textures["pixel"], collADelt, 0.01f);
+            collADbl.color = Color.Purple;
+            Collider collACol = new LineSegmentCollider(collADelt, Vector2.Zero, 2);
+            collA = new GameObj(new Controller(new Vector2(400, 400)), collADbl);
+            collA.addCollider(collACol);
 
             Vector2[] pPts = new Vector2[5];
             pPts[0] = new Vector2(200, 200);
@@ -80,6 +90,8 @@ namespace flatverse
         {
             main.update();
 
+            collA.getColliders()[0].collideAway(main.getColliders()[0]);
+
             if (tP.intersects(new LineSegment(main.getPos(), main.getPos() + mainLineDelt)))
             {
                 tpds.color = Color.Red;
@@ -97,6 +109,7 @@ namespace flatverse
             sb.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
 
             main.draw(sb);
+            collA.draw(sb);
             tpds.simpleDraw(sb, tP.segments()[0].getA());
 
             sb.End();

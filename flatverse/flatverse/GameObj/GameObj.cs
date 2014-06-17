@@ -10,7 +10,6 @@ namespace flatverse
         public List<Drawable> dbls;
 
         protected Controller controller;
-
         private List<Collider> colliders;
 
         public GameObj(Controller controller, List<Drawable> dbls)
@@ -34,6 +33,11 @@ namespace flatverse
             }
 
             controller.update();
+            Vector2 deltaP = controller.deltaP();
+            foreach (Collider coll in colliders)
+            {
+                coll.move(deltaP);
+            }
         }
 
         public virtual void draw(SpriteBatch spriteBatch)
@@ -42,6 +46,17 @@ namespace flatverse
             {
                 dbl.simpleDraw(spriteBatch, controller.getPos());
             }
+        }
+
+        public virtual void addCollider(Collider collider)
+        {
+            collider.initialize(getPos());
+            colliders.Add(collider);
+        }
+
+        public virtual List<Collider> getColliders()
+        {
+            return colliders;
         }
 
         /*
