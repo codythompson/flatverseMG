@@ -119,5 +119,15 @@ namespace flatverse
         {
             return lines;
         }
+
+        public Vector2[] points()
+        {
+            Vector2[] pts = new Vector2[lines.Length];
+            for (int i = 0; i < lines.Length; i++)
+            {
+                pts[i] = lines[i].getA();
+            }
+            return pts;
+        }
     }
 }

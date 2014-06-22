@@ -12,6 +12,13 @@ namespace flatverse
         protected Controller controller;
         private List<Collider> colliders;
 
+        public GameObj(Controller controller)
+        {
+            this.controller = controller;
+            dbls = new List<Drawable>();
+            colliders = new List<Collider>();
+        }
+
         public GameObj(Controller controller, List<Drawable> dbls)
         {
             this.controller = controller;
@@ -48,20 +55,35 @@ namespace flatverse
             }
         }
 
+        public virtual void addDrawable(Drawable dbl)
+        {
+            dbls.Add(dbl);
+        }
+
         public virtual void addCollider(Collider collider)
         {
             collider.initialize(getPos());
             colliders.Add(collider);
         }
 
+        /*
+         * Getters and setters
+         */
         public virtual List<Collider> getColliders()
         {
             return colliders;
         }
 
-        /*
-         * Getters and setters
-         */
+        public virtual Collider getCollider(int index)
+        {
+            return colliders[index];
+        }
+
+        public virtual int getColliderCount()
+        {
+            return colliders.Count;
+        }
+
         public virtual Vector2 getPos()
         {
             return controller.getPos();

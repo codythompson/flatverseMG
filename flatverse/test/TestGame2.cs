@@ -56,7 +56,8 @@ namespace flatverse
             dot.scale = new Vector2(4, 4);
             mainLineDelt = new Vector2(20, 30);
             Drawable lineD = new LineDrawable(textures["pixel"], mainLineDelt, 0.2f);
-            main = new GameObj(new DEBUG_CONTROLLER(new Vector2(200, 50)), lineD);
+            main = new DbgGameObj(new DEBUG_CONTROLLER(new Vector2(200, 50)), dot.clone());
+            main.addDrawable(lineD);
             main.addCollider(new LineSegmentCollider(mainLineDelt, Vector2.Zero, 1));
 
             Vector2 collADelt = new Vector2(100, -150);
