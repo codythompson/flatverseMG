@@ -88,5 +88,10 @@ namespace flatverse
         {
             this.explicitDeltaP += explicitDeltaP;
         }
+
+        public virtual void collisionAdjust(Vector2 newPos)
+        {
+            this.pos = newPos;
+        }
     }
 }

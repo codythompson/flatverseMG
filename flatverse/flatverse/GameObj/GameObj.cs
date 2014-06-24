@@ -62,8 +62,18 @@ namespace flatverse
 
         public virtual void addCollider(Collider collider)
         {
-            collider.initialize(getPos());
+            collider.initialize(getPos(), controller);
             colliders.Add(collider);
+        }
+
+        //TODO account for weight class
+        // may want to limit GameObj to single weight class
+        public virtual void collideAway(Collider other)
+        {
+            foreach (Collider collider in colliders)
+            {
+                collider.collideAway(other);
+            }
         }
 
         /*

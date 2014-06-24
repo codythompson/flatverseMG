@@ -23,7 +23,7 @@ namespace flatverse
         {
             base.update();
 
-            if (DEBUG_CONTROLLER.DEBUG_FLAG && getColliderCount() > 0)
+            if (DEBUG_CONTROLLER.DEBUG_FLAG_UP && getColliderCount() > 0)
             {
                 collPath = getCollider(0).getCollisionPath();
             }

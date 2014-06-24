@@ -42,5 +42,20 @@ namespace flatverse
             newInst.color = color;
             return newInst;
         }
+
+        public virtual float getLength()
+        {
+            return length;
+        }
+
+        public virtual float getAngle()
+        {
+            return angle;
+        }
+
+        public virtual Vector2 getLineDelta()
+        {
+            return new Vector2((float)(length * Math.Cos(angle)), (float)(length * Math.Sin(angle)));
+        }
     }
 }

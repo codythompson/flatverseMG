@@ -112,7 +112,21 @@ namespace flatverse
                 return false;
             }
 
-            return contains(line.getA()) || contains(line.getB());
+            if (contains(line.getA()) || contains(line.getB()))
+            {
+                return true;
+            }
+
+            foreach (LineSegment edgeLine in lines)
+            {
+                if (edgeLine.intersects(line))
+                {
+                    return true;
+                }
+            }
+
+            //if we've gotten this far the line is within the bounds but does not intersect.
+            return false;
         }
 
         public LineSegment[] segments()

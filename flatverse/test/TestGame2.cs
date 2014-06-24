@@ -26,6 +26,8 @@ namespace flatverse
 
         GameObj collA;
 
+        GridDrawable gDbl;
+
         public TestGame2()
         {
             textures = new Dictionary<string, FVImage>();
@@ -85,6 +87,9 @@ namespace flatverse
                 tpDbls[i] = ldbl;
             }
             tpds = new DrawableCollection(tpDbls, .5f);
+
+            gDbl = new GridDrawable(textures["pixel"], 12, 8, 1200, 800, .9f, 100, 100);
+            gDbl.color = Color.LightGray;
         }
 
         public void update(GameTime gameTime)
@@ -112,6 +117,7 @@ namespace flatverse
             main.draw(sb);
             collA.draw(sb);
             tpds.simpleDraw(sb, tP.segments()[0].getA());
+            gDbl.simpleDraw(sb, Vector2.Zero);
 
             sb.End();
         }

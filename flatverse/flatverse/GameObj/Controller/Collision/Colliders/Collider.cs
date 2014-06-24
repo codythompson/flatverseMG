@@ -15,10 +15,11 @@ namespace flatverse
             this.offset = offset;
         }
 
-        public abstract void initialize(Vector2 ownerPos);
+        public abstract void initialize(Vector2 ownerPos, Controller ownerController);
         public abstract void move(Vector2 deltaP);
-        public abstract float moveHalfBack();
-        public abstract float moveHalfForward();
+        public abstract float moveAlongTrajectory(float t);
+        //public abstract float moveHalfBack();
+        //public abstract float moveHalfForward();
         public abstract void moveToOriginal();
         public abstract Polygon getCollisionPath();
         public abstract bool intersects(Polygon collisionPath);
