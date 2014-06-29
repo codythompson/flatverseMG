@@ -103,7 +103,7 @@ namespace flatverse
             {
                 other.moveToOriginal();
             }
-            ownerController.collisionAdjust(line.getA());
+            //ownerController.collisionAdjust(line.getA());
         }
     }
 }

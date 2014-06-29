@@ -54,6 +54,7 @@
     <Compile Include="flatverse\GameObj\Controller\Controller.cs" />
     <Compile Include="flatverse\GameObj\Controller\SurfaceInformation.cs" />
     <Compile Include="flatverse\GameObj\GameObj.cs" />
+    <Compile Include="flatverse\GameObj\Position.cs" />
     <Compile Include="flatverse\Utils.cs" />
     <Compile Include="flatverse\XNAInterface.cs" />
     <Compile Include="Game1.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="test\GridDrawable.cs" />
     <Compile Include="test\TestGame.cs" />
     <Compile Include="test\TestGame2.cs" />
+    <Compile Include="test\TestGame3.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

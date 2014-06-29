@@ -14,9 +14,14 @@ namespace flatverse
         private bool leftDownFirst, upDownFirst;
         private bool leftDown, rightDown, upDown, downDown;
 
-        public InputController(Vector2 initialPos)
-            : base(initialPos)
-        {}
+        //public InputController(Vector2 initialPos)
+        //    : base(initialPos)
+        //{}
+
+        public InputController()
+        {
+
+        }
 
         public override void update()
         {
@@ -26,19 +31,19 @@ namespace flatverse
             Vector2 vels = new Vector2(10, 10);
             if (leftDown)
             {
-                explicitDeltaP.X -= vels.X;
+                position.singleFrameVel.X -= vels.X;
             }
             if (rightDown)
             {
-                explicitDeltaP.X += vels.X;
+                position.singleFrameVel.X += vels.X;
             }
             if (upDown)
             {
-                explicitDeltaP.Y -= vels.Y;
+                position.singleFrameVel.Y -= vels.Y;
             }
             if (downDown)
             {
-                explicitDeltaP.Y += vels.Y;
+                position.singleFrameVel.Y += vels.Y;
             }
             //
 

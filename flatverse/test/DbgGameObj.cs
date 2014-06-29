@@ -10,8 +10,8 @@ namespace flatverse
         //public LineDrawable lineDbl;
         public Polygon collPath;
 
-        public DbgGameObj(Controller controller, Drawable ptDbl/*, LineDrawable lineDbl*/)
-            : base(controller)
+        public DbgGameObj(Position position, Controller controller, Drawable ptDbl/*, LineDrawable lineDbl*/)
+            : base(position, controller)
         {
             this.ptDbl = ptDbl;
             //this.lineDbl = lineDbl;
@@ -23,10 +23,10 @@ namespace flatverse
         {
             base.update();
 
-            if (DEBUG_CONTROLLER.DEBUG_FLAG_UP && getColliderCount() > 0)
-            {
-                collPath = getCollider(0).getCollisionPath();
-            }
+            //if (DEBUG_CONTROLLER.DEBUG_FLAG_UP && getColliderCount() > 0)
+            //{
+            //    collPath = getCollider(0).getCollisionPath();
+            //}
         }
 
         public override void draw(SpriteBatch spriteBatch)
