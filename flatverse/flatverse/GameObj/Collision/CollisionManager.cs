@@ -7,6 +7,11 @@ namespace flatverse
     public class CollisionManager
     {
         /*
+         * The collision plane idea still doesn't satisfy a lot of conditions
+         * such as enemys that can interact with the player but not with the
+         * 'walls' around them, multiplayer, etc.
+         * TODO implement some sort of collision layer approach
+         * 
          * Collision plane
          * 
          * 3 groups make up the collision plane
@@ -45,6 +50,55 @@ namespace flatverse
          *     This group is reserved for the rare case where the player can move the object but the
          *     object can pass through members of the 'superHeavy' group like walls and the such.
          */
-        private List<Collider>[] colliders;
+
+        private List<Collider> heavyColliders;
+        private List<Collider> actionColliders;
+        private List<Collider> lightColliders;
+ 
+        public CollisionManager()
+        {
+            heavyColliders = new List<Collider>();
+            actionColliders = new List<Collider>();
+            lightColliders = new List<Collider>();
+        }
+
+        public void registerCollider(Collider collider)
+        {
+            if (collider.weightClass == 1)
+            {
+                heavyColliders.Add(collider);
+            }
+            else if (collider.weightClass == 0)
+            {
+                lightColliders.Add(collider);
+            }
+            else
+            {
+                actionColliders.Add(collider);
+            }
+        }
+
+        public void registerColliders(GameObj obj)
+        {
+            foreach (Collider collider in obj.getColliders())
+            {
+                registerCollider(collider);
+            }
+        }
+
+        /// <summary>
+        /// TODO
+        /// Currently this only supports heavy vs action collisions
+        /// </summary>
+        public void collide()
+        {
+            foreach (Collider heavy in heavyColliders)
+            {
+                foreach (Collider collider in actionColliders)
+                {
+                    collider.collideAwayFrom(heavy);
+                }
+            }
+        }
     }
 }

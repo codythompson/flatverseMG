@@ -10,8 +10,8 @@ namespace flatverse
         public List<Drawable> dbls;
 
         public Position position;
-        protected Controller controller;
-        private List<Collider> colliders;
+        public Controller controller;
+        public List<Collider> colliders;
 
         public GameObj(Position position, Controller controller)
         {
@@ -45,7 +45,10 @@ namespace flatverse
 
             controller.update();
             position.update();
-            //TODO update colliders
+            foreach (Collider collider in colliders)
+            {
+                collider.update();
+            }
         }
 
         public virtual void draw(SpriteBatch spriteBatch)
@@ -61,48 +64,15 @@ namespace flatverse
             dbls.Add(dbl);
         }
 
-        //public virtual void addCollider(Collider collider)
-        //{
-        //    collider.initialize(getPos(), controller);
-        //    colliders.Add(collider);
-        //}
+        public virtual void addCollider(Collider collider)
+        {
+            collider.init(position);
+            colliders.Add(collider);
+        }
 
-        ////TODO account for weight class
-        //// may want to limit GameObj to single weight class
-        //public virtual void collideAway(Collider other)
-        //{
-        //    foreach (Collider collider in colliders)
-        //    {
-        //        collider.collideAway(other);
-        //    }
-        //}
-
-        ///*
-        // * Getters and setters
-        // */
-        //public virtual List<Collider> getColliders()
-        //{
-        //    return colliders;
-        //}
-
-        //public virtual Collider getCollider(int index)
-        //{
-        //    return colliders[index];
-        //}
-
-        //public virtual int getColliderCount()
-        //{
-        //    return colliders.Count;
-        //}
-
-        //public virtual Vector2 getPos()
-        //{
-        //    return controller.getPos();
-        //}
-
-        //public virtual Vector2 getPrevPos()
-        //{
-        //    return controller.getPrevPos();
-        //}
+        public virtual List<Collider> getColliders()
+        {
+            return colliders;
+        }
     }
 }

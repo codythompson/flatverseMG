@@ -11,10 +11,6 @@ namespace flatverse
         public static bool DEBUG_FLAG_UP = false;
         public static List<Vector2> DEBUG_POINTS = new List<Vector2>();
 
-        //public DEBUG_CONTROLLER(Vector2 initialPos)
-        //    : base(initialPos)
-        //{}
-
         public DEBUG_CONTROLLER()
             : base()
         {}

@@ -12,7 +12,7 @@ namespace flatverse
         }
 
         const string WEIGHT_CLASS_EXCEPTION = "Incompatible weight classes for '{0}' method, weights given: {1} and {2}";
-        public static void throwAwayWeightClassException(Object thrower, int weightA, int weightB)
+        public static void throwAwayWeightClassException(Object thrower, float weightA, float weightB)
         {
             throw new FlatverseCollisionException(thrower, string.Format(WEIGHT_CLASS_EXCEPTION, "collideAway", weightA, weightB));
         }

@@ -21,14 +21,19 @@ namespace flatverse
 
         public TextureDrawable BLOCK;
 
+        public CollisionManager collMan;
+
         /*
          * 
          */
         public GameObj main;
 
+        List<GameObj> others;
+
         public TestGame()
         {
             textures = new Dictionary<string, FVImage>();
+            collMan = new CollisionManager();
         }
 
         public virtual void setResolution(GraphicsDeviceManager gdm)
@@ -63,13 +68,42 @@ namespace flatverse
              * 
              */
             Position position = new Position(new Vector2(200, 200));
-            main = new GameObj(position, new InputController());
-            main.addDrawable(BLOCK.clone());
+            main = new GameObj(position, new DEBUG_CONTROLLER());
+            main.addDrawable(LINE_45.clone());
+            main.dbls[0].color = Color.Purple; 
+            main.addCollider(new LineSegmentCollider(new Vector2(50, 50), Vector2.Zero, .5f));
+            collMan.registerColliders(main);
+
+            // others
+            others = new List<GameObj>();
+
+            GameObj other = new GameObj(new Position(new Vector2(700, 300)), new Controller());
+            other.addDrawable(LINE_45_NEG.clone());
+            other.addCollider(new LineSegmentCollider(new Vector2(50, -50), Vector2.Zero, 1));
+            collMan.registerColliders(other);
+            others.Add(other);
+
+            other = new GameObj(new Position(400, 400), new Controller());
+            other.addDrawable(BLOCK.clone());
+            other.dbls[0].color = Color.SandyBrown;
+            other.addCollider(new LineSegmentCollider(new Vector2(0, 32), Vector2.Zero, 1));
+            other.addCollider(new LineSegmentCollider(new Vector2(32, 0), Vector2.Zero, 1));
+            other.addCollider(new LineSegmentCollider(new Vector2(0, 32), new Vector2(32, 0), 1));
+            other.addCollider(new LineSegmentCollider(new Vector2(32, 0), new Vector2(0, 32), 1));
+            collMan.registerColliders(other);
+            others.Add(other);
         }
 
         public void update(GameTime gameTime)
         {
             main.update();
+            foreach (GameObj other in others)
+            {
+                other.update();
+            }
+
+            // collision
+            collMan.collide();
         }
         public void draw(GameTime gameTime)
         {
@@ -78,6 +112,10 @@ namespace flatverse
             sb.Begin();
 
             main.draw(sb);
+            foreach (GameObj other in others)
+            {
+                other.draw(sb);
+            }
 
             sb.End();
         }
