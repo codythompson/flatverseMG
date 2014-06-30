@@ -17,11 +17,6 @@ namespace flatverse
             : this(lineDelta, Vector2.Zero, weightClass)
         {}
 
-        public override void update()
-        {
-            collPos = position.pos;
-        }
-
         public override Polygon getCollisionPath()
         {
             Vector2 pPos = getPrevPosPlusOffset();

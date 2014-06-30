@@ -95,10 +95,28 @@ namespace flatverse
                 contains(line.getB());
         }
 
+        public bool intersects(FVRectangle rect)
+        {
+            return contains(rect.topLeft()) ||
+                contains(rect.topRight()) ||
+                contains(rect.bottomLeft()) ||
+                contains(rect.bottomRight()) ||
+                rect.contains(topLeft()) ||
+                rect.contains(topRight()) ||
+                rect.contains(bottomLeft()) ||
+                rect.contains(bottomRight());
+        }
+
         public void move(Vector2 delta)
         {
             x += delta.X;
             y += delta.Y;
+        }
+
+        public void moveTo(Vector2 pos)
+        {
+            x = pos.X;
+            y = pos.Y;
         }
 
         public static FVRectangle operator +(FVRectangle rect, Vector2 delta)

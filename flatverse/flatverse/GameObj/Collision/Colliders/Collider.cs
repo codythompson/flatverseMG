@@ -24,8 +24,21 @@ namespace flatverse
         /// Should be called after position.update
         /// but before any calls to collideAwayFrom
         /// </summary>
-        public abstract void update();
+        public virtual void update()
+        {
+            collPos = position.pos;
+        }
         public abstract Polygon getCollisionPath();
+
+        /// <summary>
+        /// TODO SERIOUS PROBLEM FOR MOVING PLATFORMS
+        /// all implementations of intersects use the current position
+        /// 
+        /// suggesting determining if hit top or side and 'pushing' in that direction in case
+        /// of intersecting current but not prev
+        /// </summary>
+        /// <param name="collisionPath"></param>
+        /// <returns></returns>
         public abstract bool intersects(Polygon collisionPath);
         public virtual void collideAwayFrom(Collider from)
         {

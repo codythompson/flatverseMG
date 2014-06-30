@@ -129,6 +129,27 @@ namespace flatverse
             return false;
         }
 
+        public bool intersects(FVRectangle rect)
+        {
+            if (!bnds.intersects(rect))
+            {
+                return false;
+            }
+
+            foreach (Vector2 point in points())
+            {
+                if (rect.contains(point))
+                {
+                    return true;
+                }
+            }
+
+            return contains(rect.topLeft()) ||
+                contains(rect.topRight()) ||
+                contains(rect.bottomLeft()) ||
+                contains(rect.bottomRight());
+        }
+
         public LineSegment[] segments()
         {
             return lines;

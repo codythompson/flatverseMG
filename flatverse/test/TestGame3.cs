@@ -69,9 +69,9 @@ namespace flatverse
              */
             Position position = new Position(new Vector2(200, 200));
             main = new GameObj(position, new DEBUG_CONTROLLER());
-            main.addDrawable(LINE_45.clone());
-            main.dbls[0].color = Color.Purple; 
-            main.addCollider(new LineSegmentCollider(new Vector2(50, 50), Vector2.Zero, .5f));
+            main.addDrawable(BLOCK.clone());
+            main.dbls[0].color = Color.ForestGreen; 
+            main.addCollider(new RectangleCollider(new Vector2(32, 32), .5f));
             collMan.registerColliders(main);
 
             // others
@@ -90,6 +90,13 @@ namespace flatverse
             other.addCollider(new LineSegmentCollider(new Vector2(32, 0), Vector2.Zero, 1));
             other.addCollider(new LineSegmentCollider(new Vector2(0, 32), new Vector2(32, 0), 1));
             other.addCollider(new LineSegmentCollider(new Vector2(32, 0), new Vector2(0, 32), 1));
+            collMan.registerColliders(other);
+            others.Add(other);
+
+            other = new GameObj(new Position(600, 400), new Controller());
+            other.addDrawable(BLOCK.clone());
+            other.dbls[0].color = Color.Yellow;
+            other.addCollider(new RectangleCollider(new Vector2(32, 32), 1));
             collMan.registerColliders(other);
             others.Add(other);
         }
