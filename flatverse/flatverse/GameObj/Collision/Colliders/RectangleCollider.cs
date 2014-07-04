@@ -5,8 +5,8 @@ namespace flatverse
 {
     public class RectangleCollider : Collider
     {
-        private FVRectangle rect, prevRect;
-        private Vector2 dims;
+        protected FVRectangle rect, prevRect;
+        protected Vector2 dims;
 
         public RectangleCollider(Vector2 dims, Vector2 offset, float weightClass)
             : base(offset, weightClass)
@@ -112,47 +112,24 @@ namespace flatverse
             return collisionPath.intersects(rect);
         }
 
-        public override void collideAwayFrom(Collider from)
+        public override Tuple<Vector2, Vector2?> getTop()
         {
-            if (DEBUG_CONTROLLER.DEBUG_FLAG_UP)
-            {
-                ;
-            }
+            return new Tuple<Vector2, Vector2?>(rect.topLeft(), rect.topRight());
+        }
 
-            base.collideAwayFrom(from);
+        public override Tuple<Vector2, Vector2?> getBottom()
+        {
+            return new Tuple<Vector2, Vector2?>(rect.bottomLeft(), rect.bottomRight());
+        }
 
-            if (!from.intersects(getCollisionPath()))
-            {
-                return;
-            }
+        public override Tuple<Vector2, Vector2?> getLeft()
+        {
+            return new Tuple<Vector2, Vector2?>(rect.topLeft(), rect.bottomLeft());
+        }
 
-            float t = 0.5f;
-            float deltT = 0.5f;
-            collPos = position.getPosOnTrajectory(t);
-            Vector2 prevCollPos = position.prevPos;
-            Vector2 lastNonIntersecting = position.prevPos;
-            while ((collPos - prevCollPos).Length() >= 1)
-            {
-                deltT = deltT / 2;
-                if (from.intersects(getCollisionPath()))
-                {
-                    t -= deltT;
-                }
-                else
-                {
-                    lastNonIntersecting = collPos;
-                    t += deltT;
-                }
-                prevCollPos = collPos;
-                collPos = position.getPosOnTrajectory(t);
-            }
-
-            if (from.intersects(getCollisionPath()))
-            {
-                collPos = lastNonIntersecting;
-            }
-
-            position.pos = collPos;
+        public override Tuple<Vector2, Vector2?> getRight()
+        {
+            return new Tuple<Vector2, Vector2?>(rect.topRight(), rect.topRight());
         }
     }
 }

@@ -6,11 +6,16 @@ namespace flatverse
     public class LineSegmentCollider : Collider
     {
         private Vector2 lineDelta;
+        //public bool isVertical;
 
         public LineSegmentCollider(Vector2 lineDelta, Vector2 offset, float weightClass)
             : base(offset, weightClass)
         {
             this.lineDelta = lineDelta;
+            //if (Math.Abs(lineDelta.Y) > .5f)
+            //{
+            //    isVertical = true;
+            //}
         }
 
         public LineSegmentCollider(Vector2 lineDelta, float weightClass)
@@ -30,47 +35,108 @@ namespace flatverse
             return collisionPath.intersects(new LineSegment(cPos, cPos + lineDelta));
         }
 
-        public override void collideAwayFrom(Collider from)
+        public override Tuple<Vector2, Vector2?> getTop()
         {
-            if (DEBUG_CONTROLLER.DEBUG_FLAG_UP)
+            Vector2 a = getPosPlusOffset();
+            Vector2 b = a + lineDelta;
+
+            if (a.Y < b.Y)
             {
-                ;
+                return new Tuple<Vector2, Vector2?>(a, null);
             }
-
-            base.collideAwayFrom(from);
-
-            if (!from.intersects(getCollisionPath()))
+            else if (b.Y < a.Y)
             {
-                return;
+                return new Tuple<Vector2, Vector2?>(b, null);
             }
-
-            float t = 0.5f;
-            float deltT = 0.5f;
-            collPos = position.getPosOnTrajectory(t);
-            Vector2 prevCollPos = position.prevPos;
-            Vector2 lastNonIntersecting = position.prevPos;
-            while ((collPos - prevCollPos).Length() >= 1)
+            else
             {
-                deltT = deltT / 2;
-                if (from.intersects(getCollisionPath()))
+                if (a.X <= b.X)
                 {
-                    t -= deltT;
+                    return new Tuple<Vector2, Vector2?>(a, b);
                 }
                 else
                 {
-                    lastNonIntersecting = collPos;
-                    t += deltT;
+                    return new Tuple<Vector2, Vector2?>(b, a);
                 }
-                prevCollPos = collPos;
-                collPos = position.getPosOnTrajectory(t);
             }
+        }
 
-            if (from.intersects(getCollisionPath()))
+        public override Tuple<Vector2, Vector2?> getBottom()
+        {
+            Vector2 a = getPosPlusOffset();
+            Vector2 b = a + lineDelta;
+
+            if (a.Y > b.Y)
             {
-                collPos = lastNonIntersecting;
+                return new Tuple<Vector2, Vector2?>(a, null);
             }
+            else if (b.Y > a.Y)
+            {
+                return new Tuple<Vector2, Vector2?>(b, null);
+            }
+            else
+            {
+                if (a.X <= b.X)
+                {
+                    return new Tuple<Vector2, Vector2?>(a, b);
+                }
+                else
+                {
+                    return new Tuple<Vector2, Vector2?>(b, a);
+                }
+            }
+        }
 
-            position.pos = collPos;
+        public override Tuple<Vector2, Vector2?> getLeft()
+        {
+            Vector2 a = getPosPlusOffset();
+            Vector2 b = a + lineDelta;
+
+            if (a.X < b.X)
+            {
+                return new Tuple<Vector2, Vector2?>(a, null);
+            }
+            else if (b.X < a.X)
+            {
+                return new Tuple<Vector2, Vector2?>(b, null);
+            }
+            else
+            {
+                if (a.Y <= b.Y)
+                {
+                    return new Tuple<Vector2, Vector2?>(a, b);
+                }
+                else
+                {
+                    return new Tuple<Vector2, Vector2?>(b, a);
+                }
+            }
+        }
+
+        public override Tuple<Vector2, Vector2?> getRight()
+        {
+            Vector2 a = getPosPlusOffset();
+            Vector2 b = a + lineDelta;
+
+            if (a.X > b.X)
+            {
+                return new Tuple<Vector2, Vector2?>(a, null);
+            }
+            else if (b.X > a.X)
+            {
+                return new Tuple<Vector2, Vector2?>(b, null);
+            }
+            else
+            {
+                if (a.Y <= b.Y)
+                {
+                    return new Tuple<Vector2, Vector2?>(a, b);
+                }
+                else
+                {
+                    return new Tuple<Vector2, Vector2?>(b, a);
+                }
+            }
         }
     }
 }

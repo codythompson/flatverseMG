@@ -10,6 +10,7 @@ namespace flatverse
         public Color color;
         public float depth;
         public Vector2 offset;
+        public bool visible;
 
         public Drawable(float depth)
         {
@@ -17,12 +18,17 @@ namespace flatverse
             scale = Vector2.One;
             color = Color.White;
             offset = Vector2.Zero;
+            visible = true;
         }
 
         public abstract void update();
         public abstract void draw(SpriteBatch spriteBatch, Vector2 pos, Vector2 scale, Color color, float lerpVal);
         public virtual void simpleDraw(SpriteBatch spriteBatch, Vector2 pos)
         {
+            if (!visible)
+            {
+                return;
+            }
             draw(spriteBatch, pos, Vector2.One, Color.White, 0);
         }
         public abstract Drawable clone();

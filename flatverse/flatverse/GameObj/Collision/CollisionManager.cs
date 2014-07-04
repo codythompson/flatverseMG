@@ -99,6 +99,14 @@ namespace flatverse
                     collider.collideAwayFrom(heavy);
                 }
             }
+            foreach (Collider heavy in heavyColliders)
+            {
+                heavy.postCollision();
+            }
+            foreach (Collider action in actionColliders)
+            {
+                action.postCollision();
+            }
         }
     }
 }

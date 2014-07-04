@@ -19,7 +19,7 @@ namespace flatverse
 
         public LineDrawable LINE_45, LINE_45_NEG, LINE_VER, LINE_HOR;
 
-        public TextureDrawable BLOCK;
+        public TextureDrawable BLOCK, WINDOW;
 
         public CollisionManager collMan;
 
@@ -64,6 +64,8 @@ namespace flatverse
 
             BLOCK = new TextureDrawable(textures["block"], .5f);
 
+            WINDOW = new TextureDrawable(textures["window"], .4f);
+
             /*
              * 
              */
@@ -96,9 +98,42 @@ namespace flatverse
             other = new GameObj(new Position(600, 400), new Controller());
             other.addDrawable(BLOCK.clone());
             other.dbls[0].color = Color.Yellow;
+            DebugCollider collider = new DebugCollider(new Vector2(32, 32), 1);
+            collider.top = new LineDrawable(textures["pixel"], new Vector2(32, 0), 1);
+            other.addCollider(collider);
+            collMan.registerColliders(other);
+            others.Add(other);
+
+            other = new GameObj(new Position(568, 400), new Controller());
+            other.addDrawable(BLOCK.clone());
+            other.dbls[0].color = Color.Yellow;
             other.addCollider(new RectangleCollider(new Vector2(32, 32), 1));
             collMan.registerColliders(other);
             others.Add(other);
+
+            other = new GameObj(new Position(536, 400), new Controller());
+            other.addDrawable(WINDOW.clone());
+            //other.dbls[0].color = Color.Yellow;
+            other.addCollider(new RectangleCollider(new Vector2(32, 32), 1));
+            collMan.registerColliders(other);
+            others.Add(other);
+
+            int initX = 100;
+            for (int i = 0; i < 32 * 10; i += 32)
+            {
+                other = new GameObj(new Position(i + initX, 600), new Controller());
+                other.addDrawable(BLOCK.clone());
+                Color color = Color.Yellow;
+                color.A = (byte)i;
+                if (i > 255)
+                {
+                    color.A = (byte)(i - 255);
+                }
+                other.dbls[0].color = color;
+                other.addCollider(new RectangleCollider(new Vector2(32, 32), 1));
+                collMan.registerColliders(other);
+                others.Add(other);
+            }
         }
 
         public void update(GameTime gameTime)
@@ -116,7 +151,7 @@ namespace flatverse
         {
             gd.Clear(Color.CornflowerBlue);
 
-            sb.Begin();
+            sb.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied);
 
             main.draw(sb);
             foreach (GameObj other in others)

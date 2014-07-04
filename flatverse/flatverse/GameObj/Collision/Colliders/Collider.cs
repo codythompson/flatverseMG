@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace flatverse
 {
@@ -9,11 +10,13 @@ namespace flatverse
         public Position position;
         public Vector2 offset;
         protected Vector2 collPos;
+        protected List<Collider> collidedWith;
 
         public Collider(Vector2 offset, float weightClass)
         {
             this.weightClass = weightClass;
             this.offset = offset;
+            collidedWith = new List<Collider>();
         }
 
         public virtual void init(Position ownerPos)
@@ -27,6 +30,10 @@ namespace flatverse
         public virtual void update()
         {
             collPos = position.pos;
+            if (collidedWith.Count > 0)
+            {
+                collidedWith = new List<Collider>();
+            }
         }
         public abstract Polygon getCollisionPath();
 
@@ -42,11 +49,44 @@ namespace flatverse
         public abstract bool intersects(Polygon collisionPath);
         public virtual void collideAwayFrom(Collider from)
         {
-            if (from.weightClass < weightClass)
+            if (!from.intersects(getCollisionPath()))
             {
-                FlatverseCollisionException.throwAwayWeightClassException(this, weightClass, from.weightClass);
+                return;
             }
+
+            float t = 0.5f;
+            float deltT = 0.5f;
+            collPos = position.getPosOnTrajectory(t);
+            Vector2 prevCollPos = position.prevPos;
+            Vector2 lastNonIntersecting = position.prevPos;
+            while ((collPos - prevCollPos).Length() >= 1)
+            {
+                deltT = deltT / 2;
+                if (from.intersects(getCollisionPath()))
+                {
+                    t -= deltT;
+                }
+                else
+                {
+                    lastNonIntersecting = collPos;
+                    t += deltT;
+                }
+                prevCollPos = collPos;
+                collPos = position.getPosOnTrajectory(t);
+            }
+
+            if (from.intersects(getCollisionPath()))
+            {
+                collPos = lastNonIntersecting;
+            }
+
+            collidedWith.Add(from);
+
+            position.pos = collPos;
         }
+
+        public virtual void postCollision() 
+        {}
 
         public Vector2 getPosPlusOffset()
         {
@@ -62,5 +102,10 @@ namespace flatverse
         {
             return collPos + offset;
         }
+
+        public abstract Tuple<Vector2, Vector2?> getTop();
+        public abstract Tuple<Vector2, Vector2?> getBottom();
+        public abstract Tuple<Vector2, Vector2?> getLeft();
+        public abstract Tuple<Vector2, Vector2?> getRight();
     }
 }
