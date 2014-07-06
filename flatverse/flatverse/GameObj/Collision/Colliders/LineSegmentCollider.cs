@@ -35,6 +35,12 @@ namespace flatverse
             return collisionPath.intersects(new LineSegment(cPos, cPos + lineDelta));
         }
 
+        public override bool intersectsPrevPos(Polygon collisionPath)
+        {
+            Vector2 pPos = getPrevPosPlusOffset();
+            return collisionPath.intersects(new LineSegment(pPos, pPos + lineDelta));
+        }
+
         public override Tuple<Vector2, Vector2?> getTop()
         {
             Vector2 a = getPosPlusOffset();

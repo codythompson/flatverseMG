@@ -112,6 +112,11 @@ namespace flatverse
             return collisionPath.intersects(rect);
         }
 
+        public override bool intersectsPrevPos(Polygon collisionPath)
+        {
+            return collisionPath.intersects(prevRect);
+        }
+
         public override Tuple<Vector2, Vector2?> getTop()
         {
             return new Tuple<Vector2, Vector2?>(rect.topLeft(), rect.topRight());

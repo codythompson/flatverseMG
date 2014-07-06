@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using System.Collections.Generic;
 
 namespace flatverse
 {
@@ -24,6 +25,11 @@ namespace flatverse
             if (DEBUG_CONTROLLER.DEBUG_FLAG_UP)
             {
                 position.singleFrameVel = new Vector2(40, 40);
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Space))
+            {
+                Debug.Print("({0}, {1})", position.pos.X, position.pos.Y);
             }
 
             base.update();

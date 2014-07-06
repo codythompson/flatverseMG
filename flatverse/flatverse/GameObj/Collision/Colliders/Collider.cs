@@ -9,7 +9,8 @@ namespace flatverse
         public float weightClass;
         public Position position;
         public Vector2 offset;
-        protected Vector2 collPos;
+        public Vector2 collPos;
+        public Vector2 missingDelta;
         protected List<Collider> collidedWith;
 
         public Collider(Vector2 offset, float weightClass)
@@ -36,21 +37,25 @@ namespace flatverse
             }
         }
         public abstract Polygon getCollisionPath();
-
-        /// <summary>
-        /// TODO SERIOUS PROBLEM FOR MOVING PLATFORMS
-        /// all implementations of intersects use the current position
-        /// 
-        /// suggesting determining if hit top or side and 'pushing' in that direction in case
-        /// of intersecting current but not prev
-        /// </summary>
-        /// <param name="collisionPath"></param>
-        /// <returns></returns>
         public abstract bool intersects(Polygon collisionPath);
+        public abstract bool intersectsPrevPos(Polygon collisionPath);
         public virtual void collideAwayFrom(Collider from)
         {
             if (!from.intersects(getCollisionPath()))
             {
+                return;
+            }
+
+            if (intersectsPrevPos(from.getCollisionPath()))
+            {
+                position.pos = position.prevPos;
+                collPos = position.pos;
+                from.collideAwayFrom(this);
+                position.pos += from.missingDelta;
+                from.position.pos += from.missingDelta;
+
+                // TODO RE-COLLIDE!!!!
+
                 return;
             }
 
@@ -81,6 +86,8 @@ namespace flatverse
             }
 
             collidedWith.Add(from);
+
+            missingDelta = position.pos - collPos;
 
             position.pos = collPos;
         }

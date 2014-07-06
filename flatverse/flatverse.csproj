@@ -53,6 +53,7 @@
     <Compile Include="flatverse\GameObj\Controller\DeltaModifier.cs" />
     <Compile Include="flatverse\GameObj\Controller\InputController.cs" />
     <Compile Include="flatverse\GameObj\Controller\Controller.cs" />
+    <Compile Include="flatverse\GameObj\Controller\PointPathController.cs" />
     <Compile Include="flatverse\GameObj\Controller\SurfaceInformation.cs" />
     <Compile Include="flatverse\GameObj\GameObj.cs" />
     <Compile Include="flatverse\GameObj\Position.cs" />
