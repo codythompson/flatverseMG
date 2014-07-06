@@ -27,19 +27,19 @@ namespace flatverse
             Vector2 vels = new Vector2(10, 10);
             if (leftDown)
             {
-                position.singleFrameVel.X -= vels.X;
+                position.addSingleFrameVel(new Vector2(-vels.X, 0));
             }
             if (rightDown)
             {
-                position.singleFrameVel.X += vels.X;
+                position.addSingleFrameVel(new Vector2(vels.X, 0));
             }
             if (upDown)
             {
-                position.singleFrameVel.Y -= vels.Y;
+                position.addSingleFrameVel(new Vector2(0, -vels.Y));
             }
             if (downDown)
             {
-                position.singleFrameVel.Y += vels.Y;
+                position.addSingleFrameVel(new Vector2(0, vels.Y));
             }
             //
 

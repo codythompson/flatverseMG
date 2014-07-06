@@ -24,7 +24,7 @@ namespace flatverse
 
             if (DEBUG_CONTROLLER.DEBUG_FLAG_UP)
             {
-                position.singleFrameVel = new Vector2(40, 40);
+                //position.singleFrameVel = new Vector2(40, 40);
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Space))

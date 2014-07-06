@@ -6,7 +6,7 @@ namespace flatverse
     public class Position
     {
         public Vector2 pos, prevPos;
-        public Vector2 singleFrameVel;
+        protected Vector2 singleFrameVel;
         public Vector2 vel;
         public Vector2 accel;
 
@@ -47,6 +47,11 @@ namespace flatverse
         public virtual bool noChange()
         {
             return pos == prevPos;
+        }
+
+        public virtual void addSingleFrameVel(Vector2 vel)
+        {
+            singleFrameVel += vel;
         }
     }
 }

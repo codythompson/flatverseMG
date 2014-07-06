@@ -39,7 +39,7 @@ namespace flatverse
                     pointIndex = 0;
                 }
             }
-            position.singleFrameVel += vel;
+            position.addSingleFrameVel(vel);
 
             base.update();
         }
