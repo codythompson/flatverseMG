@@ -143,7 +143,7 @@ namespace flatverse
                 new PointPathController(new Vector2[]{new Vector2(700, 500), new Vector2(1000, 500), new Vector2(1000, 700), new Vector2(500, 700)}, 5));
             other.addDrawable(BLOCK.clone());
             other.dbls[0].color = Color.DarkSlateBlue;
-            other.addCollider(new RectangleCollider(new Vector2(32, 32)));
+            other.addCollider(new DebugCollider(new Vector2(32, 32), "mover"));
             collMan.registerColliders(other, 0, true);
             others.Add(other);
         }

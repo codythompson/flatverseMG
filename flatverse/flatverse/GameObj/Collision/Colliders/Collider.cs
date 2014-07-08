@@ -50,6 +50,7 @@ namespace flatverse
                 collPos = position.pos;
                 from.collideAwayFrom(this);
                 position.pos += from.missingDelta;
+                collPos += from.missingDelta;
                 from.position.pos += from.missingDelta;
                 from.collPos += from.missingDelta;
 
