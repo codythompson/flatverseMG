@@ -6,16 +6,14 @@ namespace flatverse
 {
     public abstract class Collider
     {
-        public float weightClass;
         public Position position;
         public Vector2 offset;
         public Vector2 collPos;
         public Vector2 missingDelta;
         protected List<Collider> collidedWith;
 
-        public Collider(Vector2 offset, float weightClass)
+        public Collider(Vector2 offset)
         {
-            this.weightClass = weightClass;
             this.offset = offset;
             collidedWith = new List<Collider>();
         }
@@ -53,6 +51,7 @@ namespace flatverse
                 from.collideAwayFrom(this);
                 position.pos += from.missingDelta;
                 from.position.pos += from.missingDelta;
+                from.collPos += from.missingDelta;
 
                 // TODO RE-COLLIDE!!!!
 

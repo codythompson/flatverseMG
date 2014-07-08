@@ -8,22 +8,22 @@ namespace flatverse
         protected FVRectangle rect, prevRect;
         protected Vector2 dims;
 
-        public RectangleCollider(Vector2 dims, Vector2 offset, float weightClass)
-            : base(offset, weightClass)
+        public RectangleCollider(Vector2 dims, Vector2 offset)
+            : base(offset)
         {
             this.dims = dims;
         }
 
-        public RectangleCollider(float x, float y, Vector2 offset, float weightClass)
-            : this(new Vector2(x, y), offset, weightClass)
+        public RectangleCollider(float x, float y, Vector2 offset)
+            : this(new Vector2(x, y), offset)
         { }
 
-        public RectangleCollider(Vector2 dims, float weightClass)
-            : this(dims, Vector2.Zero, weightClass)
+        public RectangleCollider(Vector2 dims)
+            : this(dims, Vector2.Zero)
         { }
 
-        public RectangleCollider(float x, float y, float weightClass)
-            : this(x, y, Vector2.Zero, weightClass)
+        public RectangleCollider(float x, float y)
+            : this(x, y, Vector2.Zero)
         { }
 
         public override void init(Position ownerPos)

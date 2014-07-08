@@ -8,8 +8,8 @@ namespace flatverse
         private Vector2 lineDelta;
         //public bool isVertical;
 
-        public LineSegmentCollider(Vector2 lineDelta, Vector2 offset, float weightClass)
-            : base(offset, weightClass)
+        public LineSegmentCollider(Vector2 lineDelta, Vector2 offset)
+            : base(offset)
         {
             this.lineDelta = lineDelta;
             //if (Math.Abs(lineDelta.Y) > .5f)
@@ -18,8 +18,8 @@ namespace flatverse
             //}
         }
 
-        public LineSegmentCollider(Vector2 lineDelta, float weightClass)
-            : this(lineDelta, Vector2.Zero, weightClass)
+        public LineSegmentCollider(Vector2 lineDelta)
+            : this(lineDelta, Vector2.Zero)
         {}
 
         public override Polygon getCollisionPath()

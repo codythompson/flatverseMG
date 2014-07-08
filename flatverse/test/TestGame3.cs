@@ -26,6 +26,8 @@ namespace flatverse
         /*
          * 
          */
+        int updateCtr = 0;
+
         public GameObj main;
 
         List<GameObj> others;
@@ -33,7 +35,7 @@ namespace flatverse
         public TestGame()
         {
             textures = new Dictionary<string, FVImage>();
-            collMan = new CollisionManager();
+            collMan = new CollisionManager(2);
         }
 
         public virtual void setResolution(GraphicsDeviceManager gdm)
@@ -73,79 +75,82 @@ namespace flatverse
             main = new GameObj(position, new DEBUG_CONTROLLER());
             main.addDrawable(BLOCK.clone());
             main.dbls[0].color = Color.ForestGreen; 
-            main.addCollider(new RectangleCollider(new Vector2(32, 32), .5f));
-            collMan.registerColliders(main);
+            main.addCollider(new DebugCollider(new Vector2(32, 32), "player"));
+            collMan.registerColliders(main, 0, false);
+            collMan.registerColliders(main, 1, true);
 
             // others
             others = new List<GameObj>();
 
             GameObj other = new GameObj(new Position(new Vector2(700, 300)), new Controller());
             other.addDrawable(LINE_45_NEG.clone());
-            other.addCollider(new LineSegmentCollider(new Vector2(50, -50), Vector2.Zero, 1));
-            collMan.registerColliders(other);
+            other.addCollider(new LineSegmentCollider(new Vector2(50, -50), Vector2.Zero));
+            collMan.registerColliders(other, 0, true);
             others.Add(other);
 
             other = new GameObj(new Position(400, 400), new Controller());
             other.addDrawable(BLOCK.clone());
             other.dbls[0].color = Color.SandyBrown;
-            other.addCollider(new LineSegmentCollider(new Vector2(0, 32), Vector2.Zero, 1));
-            other.addCollider(new LineSegmentCollider(new Vector2(32, 0), Vector2.Zero, 1));
-            other.addCollider(new LineSegmentCollider(new Vector2(0, 32), new Vector2(32, 0), 1));
-            other.addCollider(new LineSegmentCollider(new Vector2(32, 0), new Vector2(0, 32), 1));
-            collMan.registerColliders(other);
+            //other.addCollider(new LineSegmentCollider(new Vector2(0, 32), Vector2.Zero, 1));
+            //other.addCollider(new LineSegmentCollider(new Vector2(32, 0), Vector2.Zero, 1));
+            //other.addCollider(new LineSegmentCollider(new Vector2(0, 32), new Vector2(32, 0), 1));
+            //other.addCollider(new LineSegmentCollider(new Vector2(32, 0), new Vector2(0, 32), 1));
+            other.addCollider(new RectangleCollider(new Vector2(32, 32)));
+            collMan.registerColliders(other, 1, false);
             others.Add(other);
 
-            other = new GameObj(new Position(600, 400), new Controller());
-            other.addDrawable(BLOCK.clone());
-            other.dbls[0].color = Color.Yellow;
-            DebugCollider collider = new DebugCollider(new Vector2(32, 32), 1);
-            collider.top = new LineDrawable(textures["pixel"], new Vector2(32, 0), 1);
-            other.addCollider(collider);
-            collMan.registerColliders(other);
-            others.Add(other);
+            //other = new GameObj(new Position(600, 400), new Controller());
+            //other.addDrawable(BLOCK.clone());
+            //other.dbls[0].color = Color.Yellow;
+            //DebugCollider collider = new DebugCollider(new Vector2(32, 32), 1);
+            //collider.top = new LineDrawable(textures["pixel"], new Vector2(32, 0), 1);
+            //other.addCollider(collider);
+            //collMan.registerColliders(other, 0, true);
+            //others.Add(other);
 
             other = new GameObj(new Position(568, 400), new Controller());
             other.addDrawable(BLOCK.clone());
             other.dbls[0].color = Color.Yellow;
-            other.addCollider(new RectangleCollider(new Vector2(32, 32), 1));
-            collMan.registerColliders(other);
+            other.addCollider(new RectangleCollider(new Vector2(32, 32)));
+            collMan.registerColliders(other, 0, true);
             others.Add(other);
 
             other = new GameObj(new Position(536, 400), new Controller());
             other.addDrawable(WINDOW.clone());
             //other.dbls[0].color = Color.Yellow;
-            other.addCollider(new RectangleCollider(new Vector2(32, 32), 1));
-            collMan.registerColliders(other);
+            other.addCollider(new RectangleCollider(new Vector2(32, 32)));
+            collMan.registerColliders(other, 0, true);
             others.Add(other);
 
             int initX = 100;
-            for (int i = 0; i < 32 * 10; i += 32)
+            for (int i = 0; i < 32 * 2; i += 32)
             {
                 other = new GameObj(new Position(i + initX, 600), new Controller());
                 other.addDrawable(BLOCK.clone());
                 Color color = Color.Yellow;
-                color.A = (byte)i;
-                if (i > 255)
-                {
-                    color.A = (byte)(i - 255);
-                }
+                //color.A = (byte)i;
+                //if (i > 255)
+                //{
+                //    color.A = (byte)(i - 255);
+                //}
                 other.dbls[0].color = color;
-                other.addCollider(new RectangleCollider(new Vector2(32, 32), 1));
-                collMan.registerColliders(other);
+                other.addCollider(new DebugCollider(new Vector2(32, 32), i + "_other"));
+                collMan.registerColliders(other, 1, false);
                 others.Add(other);
             }
 
             other = new GameObj(new Position(600, 500),
-                new PointPathController(new Vector2[]{new Vector2(700, 500), new Vector2(1000, 500), new Vector2(1000, 700), new Vector2(700, 700)}, 5));
+                new PointPathController(new Vector2[]{new Vector2(700, 500), new Vector2(1000, 500), new Vector2(1000, 700), new Vector2(500, 700)}, 5));
             other.addDrawable(BLOCK.clone());
             other.dbls[0].color = Color.DarkSlateBlue;
-            other.addCollider(new RectangleCollider(new Vector2(32, 32), 1));
-            collMan.registerColliders(other);
+            other.addCollider(new RectangleCollider(new Vector2(32, 32)));
+            collMan.registerColliders(other, 0, true);
             others.Add(other);
         }
 
         public void update(GameTime gameTime)
         {
+            updateCtr++;
             main.update();
             foreach (GameObj other in others)
             {
