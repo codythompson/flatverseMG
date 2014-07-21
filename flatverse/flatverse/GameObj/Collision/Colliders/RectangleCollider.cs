@@ -106,6 +106,34 @@ namespace flatverse
             return new Polygon(points);
         }
 
+        public override Polygon getPlatformPathBottom()
+        {
+            rect.move(getPosPlusOffset());
+            Vector2 dir = new Vector2(0, 1);
+            return new Polygon(new Vector2[] {rect.bottomLeft(), rect.bottomRight(), rect.bottomRight() + dir, rect.bottomLeft() + dir});
+        }
+
+        public override Polygon getPlatformPathTop()
+        {
+            rect.move(getPosPlusOffset());
+            Vector2 dir = new Vector2(0, -1);
+            return new Polygon(new Vector2[] { rect.topLeft(), rect.topRight(), rect.topRight() + dir, rect.topLeft() + dir });
+        }
+
+        public override Polygon getPlatformPathRight()
+        {
+            rect.move(getPosPlusOffset());
+            Vector2 dir = new Vector2(1, 0);
+            return new Polygon(new Vector2[] { rect.topRight(), rect.bottomRight(), rect.bottomRight() + dir, rect.topLeft() + dir });
+        }
+
+        public override Polygon getPlatformPathLeft()
+        {
+            rect.move(getPosPlusOffset());
+            Vector2 dir = new Vector2(-1, 0);
+            return new Polygon(new Vector2[] { rect.topLeft(), rect.bottomLeft(), rect.bottomLeft() + dir, rect.topLeft() + dir });
+        }
+
         public override bool intersects(Polygon collisionPath)
         {
             rect.moveTo(getCollPosPlusOffset());
@@ -117,24 +145,24 @@ namespace flatverse
             return collisionPath.intersects(prevRect);
         }
 
-        public override Tuple<Vector2, Vector2?> getTop()
-        {
-            return new Tuple<Vector2, Vector2?>(rect.topLeft(), rect.topRight());
-        }
+        //public override Tuple<Vector2, Vector2?> getTop()
+        //{
+        //    return new Tuple<Vector2, Vector2?>(rect.topLeft(), rect.topRight());
+        //}
 
-        public override Tuple<Vector2, Vector2?> getBottom()
-        {
-            return new Tuple<Vector2, Vector2?>(rect.bottomLeft(), rect.bottomRight());
-        }
+        //public override Tuple<Vector2, Vector2?> getBottom()
+        //{
+        //    return new Tuple<Vector2, Vector2?>(rect.bottomLeft(), rect.bottomRight());
+        //}
 
-        public override Tuple<Vector2, Vector2?> getLeft()
-        {
-            return new Tuple<Vector2, Vector2?>(rect.topLeft(), rect.bottomLeft());
-        }
+        //public override Tuple<Vector2, Vector2?> getLeft()
+        //{
+        //    return new Tuple<Vector2, Vector2?>(rect.topLeft(), rect.bottomLeft());
+        //}
 
-        public override Tuple<Vector2, Vector2?> getRight()
-        {
-            return new Tuple<Vector2, Vector2?>(rect.topRight(), rect.topRight());
-        }
+        //public override Tuple<Vector2, Vector2?> getRight()
+        //{
+        //    return new Tuple<Vector2, Vector2?>(rect.topRight(), rect.topRight());
+        //}
     }
 }
