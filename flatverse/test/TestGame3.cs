@@ -35,7 +35,7 @@ namespace flatverse
         public TestGame()
         {
             textures = new Dictionary<string, FVImage>();
-            collMan = new CollisionManager(2);
+            collMan = new CollisionManager(3);
         }
 
         public virtual void setResolution(GraphicsDeviceManager gdm)
@@ -78,6 +78,7 @@ namespace flatverse
             main.addCollider(new DebugCollider(new Vector2(32, 32), "player"));
             collMan.registerColliders(main, 0, false);
             collMan.registerColliders(main, 1, true);
+            collMan.registerColliders(main, 2, false);
 
             // others
             others = new List<GameObj>();
@@ -91,22 +92,10 @@ namespace flatverse
             other = new GameObj(new Position(400, 400), new Controller());
             other.addDrawable(BLOCK.clone());
             other.dbls[0].color = Color.SandyBrown;
-            //other.addCollider(new LineSegmentCollider(new Vector2(0, 32), Vector2.Zero, 1));
-            //other.addCollider(new LineSegmentCollider(new Vector2(32, 0), Vector2.Zero, 1));
-            //other.addCollider(new LineSegmentCollider(new Vector2(0, 32), new Vector2(32, 0), 1));
-            //other.addCollider(new LineSegmentCollider(new Vector2(32, 0), new Vector2(0, 32), 1));
             other.addCollider(new RectangleCollider(new Vector2(32, 32)));
             collMan.registerColliders(other, 1, false);
+            collMan.registerColliders(other, 2, false);
             others.Add(other);
-
-            //other = new GameObj(new Position(600, 400), new Controller());
-            //other.addDrawable(BLOCK.clone());
-            //other.dbls[0].color = Color.Yellow;
-            //DebugCollider collider = new DebugCollider(new Vector2(32, 32), 1);
-            //collider.top = new LineDrawable(textures["pixel"], new Vector2(32, 0), 1);
-            //other.addCollider(collider);
-            //collMan.registerColliders(other, 0, true);
-            //others.Add(other);
 
             other = new GameObj(new Position(568, 400), new Controller());
             other.addDrawable(BLOCK.clone());
@@ -117,7 +106,6 @@ namespace flatverse
 
             other = new GameObj(new Position(536, 400), new Controller());
             other.addDrawable(WINDOW.clone());
-            //other.dbls[0].color = Color.Yellow;
             other.addCollider(new RectangleCollider(new Vector2(32, 32)));
             collMan.registerColliders(other, 0, true);
             others.Add(other);
@@ -145,6 +133,13 @@ namespace flatverse
             other.dbls[0].color = Color.DarkSlateBlue;
             other.addCollider(new DebugCollider(new Vector2(32, 32), "mover"));
             collMan.registerColliders(other, 0, true);
+            others.Add(other);
+
+            other = new GameObj(new Position(950, 500), new Controller());
+            other.addDrawable(BLOCK.clone());
+            other.dbls[0].color = Color.Azure;
+            other.addCollider(new DebugCollider(new Vector2(32, 32), "wall"));
+            collMan.registerColliders(other, 2, true);
             others.Add(other);
         }
 

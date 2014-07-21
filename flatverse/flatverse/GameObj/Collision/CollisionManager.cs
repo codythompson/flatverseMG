@@ -50,7 +50,17 @@ namespace flatverse
                 {
                     foreach (Collider lightColl in light[i])
                     {
-                        lightColl.collideAwayFrom(heavyColl);
+                        lightColl.collideAwayFrom(heavyColl, true);
+                    }
+                }
+            }
+            for (int i = heavy.Length - 1; i >= 0; i--)
+            {
+                for (int j = heavy[i].Count - 1; j >= 0; j--)
+                {
+                    for (int k = light[i].Count - 1; k >= 0; k--)
+                    {
+                        heavy[i][j].collideAwayFrom(light[i][k], false);
                     }
                 }
             }

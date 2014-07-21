@@ -37,24 +37,72 @@ namespace flatverse
         public abstract Polygon getCollisionPath();
         public abstract bool intersects(Polygon collisionPath);
         public abstract bool intersectsPrevPos(Polygon collisionPath);
-        public virtual void collideAwayFrom(Collider from)
+        //public virtual void doubleCollide(Collider other)
+        //{
+        //    if (!other.intersects(getCollisionPath()))
+        //    {
+        //        return;
+        //    }
+
+        //    float t = 0.5f;
+        //    float deltT = 0.5f;
+        //    collPos = position.getPosOnTrajectory(t);
+        //    other.collPos = other.position.getPosOnTrajectory(t);
+        //    Vector2 prevCollPos = position.prevPos;
+        //    Vector2 lastNon = position.prevPos;
+        //    Vector2 otherPrevCollPos = other.position.prevPos;
+        //    Vector2 otherLastNon = other.position.prevPos;
+
+        //    while ((collPos - prevCollPos).Length() >= 1 || (other.collPos - otherPrevCollPos).Length() >= 1)
+        //    {
+        //        deltT = deltT / 2;
+        //        if (other.intersects(getCollisionPath()))
+        //        {
+        //            t -= deltT;
+        //        }
+        //        else
+        //        {
+        //            lastNon = collPos;
+        //            otherLastNon = other.collPos;
+        //            t += deltT;
+        //        }
+        //        prevCollPos = collPos;
+        //        otherPrevCollPos = other.collPos;
+
+        //        collPos = position.getPosOnTrajectory(t);
+        //        other.collPos = other.position.getPosOnTrajectory(t);
+        //    }
+
+        //    if (other.intersects(getCollisionPath()))
+        //    {
+        //        collPos = lastNon;
+        //        other.collPos = otherLastNon;
+        //    }
+
+        //    collidedWith.Add(other);
+        //    other.collidedWith.Add(this);
+        //    missingDelta = position.pos - collPos;
+        //    other.missingDelta = other.position.pos - other.collPos;
+        //    position.pos = collPos;
+        //    other.position.pos = other.collPos;
+        //}
+        public virtual void collideAwayFrom(Collider from, bool allowAdjustment)
         {
             if (!from.intersects(getCollisionPath()))
             {
                 return;
             }
 
-            if (intersectsPrevPos(from.getCollisionPath()))
+            if (intersectsPrevPos(from.getCollisionPath()) && allowAdjustment)
             {
                 position.pos = position.prevPos;
                 collPos = position.pos;
-                from.collideAwayFrom(this);
+                from.collideAwayFrom(this, false);
+
                 position.pos += from.missingDelta;
                 collPos += from.missingDelta;
                 from.position.pos += from.missingDelta;
                 from.collPos += from.missingDelta;
-
-                // TODO RE-COLLIDE!!!!
 
                 return;
             }
@@ -90,6 +138,11 @@ namespace flatverse
             missingDelta = position.pos - collPos;
 
             position.pos = collPos;
+        }
+
+        public virtual void collideWith()
+        {
+
         }
 
         public virtual void postCollision() 
