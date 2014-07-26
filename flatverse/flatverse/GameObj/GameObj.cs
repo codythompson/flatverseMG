@@ -66,7 +66,7 @@ namespace flatverse
 
         public virtual void addCollider(Collider collider)
         {
-            collider.init(position);
+            collider.init(this);
             colliders.Add(collider);
         }
 

@@ -26,9 +26,9 @@ namespace flatverse
             : this(x, y, Vector2.Zero)
         { }
 
-        public override void init(Position ownerPos)
+        public override void init(GameObj owner)
         {
-            base.init(ownerPos);
+            base.init(owner);
             rect = new FVRectangle(getPosPlusOffset(), dims);
             prevRect = new FVRectangle(getPrevPosPlusOffset(), dims);
         }

@@ -6,6 +6,7 @@ namespace flatverse
 {
     public abstract class Collider
     {
+        private GameObj owner;
         public Position position;
         public Vector2 offset;
         public Vector2 collPos;
@@ -18,9 +19,10 @@ namespace flatverse
             collidedWith = new List<Collider>();
         }
 
-        public virtual void init(Position ownerPos)
+        public virtual void init(GameObj owner)
         {
-            this.position = ownerPos;
+            this.owner = owner;
+            this.position = owner.position;
         }
         /// <summary>
         /// Should be called after position.update
@@ -55,10 +57,8 @@ namespace flatverse
                 collPos = position.pos;
                 from.collideAwayFrom(this, false);
 
-                position.pos += from.missingDelta;
-                collPos += from.missingDelta;
-                from.position.pos += from.missingDelta;
-                from.collPos += from.missingDelta;
+                collPos += position.collisionAdjust(from.missingDelta);
+                from.collPos += from.position.collisionAdjust(from.missingDelta);
 
                 return;
             }
@@ -96,14 +96,6 @@ namespace flatverse
             position.pos = collPos;
         }
 
-        public virtual void collideWith()
-        {
-
-        }
-
-        public virtual void postCollision() 
-        {}
-
         public Vector2 getPosPlusOffset()
         {
             return position.pos + offset;
@@ -118,10 +110,5 @@ namespace flatverse
         {
             return collPos + offset;
         }
-
-        //public abstract Tuple<Vector2, Vector2?> getTop();
-        //public abstract Tuple<Vector2, Vector2?> getBottom();
-        //public abstract Tuple<Vector2, Vector2?> getLeft();
-        //public abstract Tuple<Vector2, Vector2?> getRight();
     }
 }

@@ -9,6 +9,7 @@ namespace flatverse
         protected Vector2 singleFrameVel;
         public Vector2 vel;
         public Vector2 accel;
+        private Vector2 collAdjust;
 
         public Position(Vector2 initialPos)
         {
@@ -32,6 +33,8 @@ namespace flatverse
             vel += accel;
 
             singleFrameVel = Vector2.Zero;
+
+            collAdjust = Vector2.Zero;
         }
 
         public virtual Vector2 getPosOnTrajectory(float t)
@@ -52,6 +55,19 @@ namespace flatverse
         public virtual void addSingleFrameVel(Vector2 vel)
         {
             singleFrameVel += vel;
+        }
+
+        public virtual Vector2 collisionAdjust(Vector2 adjustment)
+        {
+            if (collAdjust.Length() < adjustment.Length())
+            {
+                Vector2 remainingAdjustment = (adjustment - collAdjust);
+                pos += remainingAdjustment;
+                collAdjust = adjustment;
+                return remainingAdjustment;
+            }
+
+            return Vector2.Zero;
         }
     }
 }
