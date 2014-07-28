@@ -143,6 +143,26 @@ namespace flatverse
             }
         }
 
+        public bool isAboveThis(Polygon polygon)
+        {
+            return lineRep.isAboveThis(polygon);
+        }
+
+        public bool isBelowThis(Polygon polygon)
+        {
+            return lineRep.isBelowThis(polygon);
+        }
+
+        public bool isRightOfThis(Polygon polygon)
+        {
+            return lineRep.isRightOfThis(polygon);
+        }
+
+        public bool isLeftOfThis(Polygon polygon)
+        {
+            return lineRep.isLeftOfThis(polygon);
+        }
+
         public bool isVertical()
         {
             return lineRep.isVertical();
@@ -202,6 +222,10 @@ namespace flatverse
             bool intersects(NonAxisAlignedLineSegment line);
             bool intersects(VertLineSegment line);
             bool intersects(HorLineSegment line);
+            bool isAboveThis(Polygon polygon);
+            bool isBelowThis(Polygon polygon);
+            bool isLeftOfThis(Polygon polygon);
+            bool isRightOfThis(Polygon polygon);
             bool isVertical();
             bool isHorizontal();
             void move(Vector2 delta);
@@ -337,6 +361,26 @@ namespace flatverse
             {
                 Vector2 otherLeft = line.leftMost();
                 return y == otherLeft.Y && (containsX(otherLeft.X) || containsX(line.right()));
+            }
+
+            public bool isAboveThis(Polygon polygon)
+            {
+                return polygon.right() >= leftX && polygon.left() <= rightX && polygon.bottom() <= y;
+            }
+
+            public bool isBelowThis(Polygon polygon)
+            {
+                return polygon.right() >= leftX && polygon.left() <= rightX && polygon.top() >= y;
+            }
+
+            public bool isLeftOfThis(Polygon polygon)
+            {
+                return polygon.top() <= y && polygon.bottom() >= y && polygon.right() <= leftX;
+            }
+
+            public bool isRightOfThis(Polygon polygon)
+            {
+                return polygon.top() <= y && polygon.bottom() >= y && polygon.left() >= rightX;
             }
 
             public bool isVertical()
@@ -488,6 +532,26 @@ namespace flatverse
             public bool intersects(HorLineSegment line)
             {
                 return containsY(line.yAt(x));
+            }
+
+            public bool isAboveThis(Polygon polygon)
+            {
+                return polygon.left() <= x && polygon.right() >= x && polygon.bottom() <= topY;
+            }
+
+            public bool isBelowThis(Polygon polygon)
+            {
+                return polygon.left() <= x && polygon.right() >= x && polygon.top() >= botY;
+            }
+
+            public bool isLeftOfThis(Polygon polygon)
+            {
+                return polygon.bottom() <= topY && polygon.top() >= botY && polygon.right() <= x;
+            }
+
+            public bool isRightOfThis(Polygon polygon)
+            {
+                return polygon.bottom() <= topY && polygon.top() >= botY && polygon.left() >= x;
             }
 
             public bool isVertical()
@@ -686,6 +750,26 @@ namespace flatverse
             public bool intersects(HorLineSegment line)
             {
                 return line.containsX(xAt(line.top()));
+            }
+
+            public bool isAboveThis(Polygon polygon)
+            {
+                return false;
+            }
+
+            public bool isBelowThis(Polygon polygon)
+            {
+                return false;
+            }
+
+            public bool isRightOfThis(Polygon polygon)
+            {
+                return false;
+            }
+
+            public bool isLeftOfThis(Polygon polygon)
+            {
+                return false;
             }
 
             public bool isVertical()

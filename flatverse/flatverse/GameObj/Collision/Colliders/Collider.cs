@@ -41,6 +41,8 @@ namespace flatverse
         public abstract Polygon getPlatformPathTop();
         public abstract Polygon getPlatformPathLeft();
         public abstract Polygon getPlatformPathRight();
+        public abstract Polygon getPrevBounds();
+        public abstract Polygon getPosBounds();
 
         public abstract bool intersects(Polygon collisionPath);
         public abstract bool intersectsPrevPos(Polygon collisionPath);

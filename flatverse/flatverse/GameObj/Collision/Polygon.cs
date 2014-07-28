@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace flatverse
 {
@@ -7,6 +8,10 @@ namespace flatverse
     {
         private LineSegment[] lines;
         private FVRectangle bnds;
+        private List<Vector2> leftmostPoints;
+        private List<Vector2> rightmostPoints;
+        private List<Vector2> topmostPoints;
+        private List<Vector2> botmostPoints;
 
         public Polygon(Vector2[] points)
         {
@@ -22,19 +27,42 @@ namespace flatverse
                 if (pointA.X < left)
                 {
                     left = pointA.X;
+                    leftmostPoints = new List<Vector2>();
+                    leftmostPoints.Add(pointA);
                 }
-                else if (pointA.X > right)
+                else if (pointA.X == left) {
+                    leftmostPoints.Add(pointA);
+                }
+                
+                if (pointA.X > right)
                 {
                     right = pointA.X;
+                    rightmostPoints = new List<Vector2>();
+                    rightmostPoints.Add(pointA);
+                }
+                else if (pointA.X == right)
+                {
+                    rightmostPoints.Add(pointA);
                 }
 
                 if (pointA.Y < top)
                 {
                     top = pointA.Y;
+                    topmostPoints = new List<Vector2>();
+                    topmostPoints.Add(pointA);
                 }
-                else if (pointA.Y > bot)
+                else if (pointA.Y == top) {
+                    topmostPoints.Add(pointA);
+                }
+                
+                if (pointA.Y > bot)
                 {
                     bot = pointA.Y;
+                    botmostPoints = new List<Vector2>();
+                    botmostPoints.Add(pointA);
+                }
+                else if (pointA.Y == bot) {
+                    botmostPoints.Add(pointA);
                 }
             }
             Vector2 lastPoint = points[points.Length - 1];
@@ -163,6 +191,26 @@ namespace flatverse
                 pts[i] = lines[i].getA();
             }
             return pts;
+        }
+
+        public List<Vector2> leftmost()
+        {
+            return leftmostPoints;
+        }
+
+        public List<Vector2> rightmost()
+        {
+            return rightmostPoints;
+        }
+
+        public List<Vector2> topmost()
+        {
+            return topmostPoints;
+        }
+
+        public List<Vector2> bottommost()
+        {
+            return botmostPoints;
         }
     }
 }

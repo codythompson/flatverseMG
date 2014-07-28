@@ -38,6 +38,7 @@
     <Compile Include="flatverse\Drawable\DrawableCollection.cs" />
     <Compile Include="flatverse\Drawable\RectDrawable.cs" />
     <Compile Include="flatverse\GameObj\Collision\Colliders\Collider.cs" />
+    <Compile Include="flatverse\GameObj\Collision\Colliders\OneWayCollider.cs" />
     <Compile Include="flatverse\GameObj\Collision\Colliders\RectangleCollider.cs" />
     <Compile Include="flatverse\GameObj\Collision\CollisionManager.cs" />
     <Compile Include="flatverse\GameObj\Collision\Colliders\LineSegmentCollider.cs" />

@@ -134,6 +134,18 @@ namespace flatverse
             return new Polygon(new Vector2[] { rect.topLeft(), rect.bottomLeft(), rect.bottomLeft() + dir, rect.topLeft() + dir });
         }
 
+        public override Polygon getPrevBounds()
+        {
+            prevRect.move(getPrevPosPlusOffset());
+            return new Polygon(new Vector2[] { prevRect.topLeft(), prevRect.topRight(), prevRect.bottomRight(), prevRect.bottomLeft()});
+        }
+
+        public override Polygon getPosBounds()
+        {
+            rect.moveTo(getPosPlusOffset());
+            return new Polygon(new Vector2[] { rect.topLeft(), rect.topRight(), rect.bottomRight(), rect.bottomLeft()});
+        }
+
         public override bool intersects(Polygon collisionPath)
         {
             rect.moveTo(getCollPosPlusOffset());

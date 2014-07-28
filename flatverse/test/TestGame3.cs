@@ -141,6 +141,13 @@ namespace flatverse
             other.addCollider(new DebugCollider(new Vector2(32, 32), "wall"));
             collMan.registerColliders(other, 2, true);
             others.Add(other);
+
+            other = new GameObj(new Position(1000, 100), new Controller());
+            other.addDrawable(LINE_HOR.clone());
+            other.dbls[0].color = Color.DarkOliveGreen;
+            other.addCollider(new OneWayCollider(OneWayCollider.Direction.DOWN, new Vector2(50, 0)));
+            collMan.registerColliders(other, 0, true);
+            others.Add(other);
         }
 
         public void update(GameTime gameTime)
