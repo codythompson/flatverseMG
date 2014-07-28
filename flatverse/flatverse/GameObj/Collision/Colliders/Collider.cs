@@ -48,54 +48,54 @@ namespace flatverse
         public abstract bool intersectsPrevPos(Polygon collisionPath);
         public virtual void collideAwayFrom(Collider from, bool allowAdjustment)
         {
-            if (!from.intersects(getCollisionPath()))
+            if (!intersects(from.getCollisionPath()))
             {
                 return;
             }
 
-            if (intersectsPrevPos(from.getCollisionPath()) && allowAdjustment)
+            if (from.intersectsPrevPos(getCollisionPath()) && allowAdjustment)
             {
-                position.pos = position.prevPos;
-                collPos = position.pos;
+                from.position.pos = from.position.prevPos;
+                from.collPos = from.position.pos;
                 from.collideAwayFrom(this, false);
 
-                collPos += position.collisionAdjust(from.missingDelta);
-                from.collPos += from.position.collisionAdjust(from.missingDelta);
+                collPos += position.collisionAdjust(missingDelta);
+                from.collPos += from.position.collisionAdjust(missingDelta);
 
                 return;
             }
 
             float t = 0.5f;
             float deltT = 0.5f;
-            collPos = position.getPosOnTrajectory(t);
-            Vector2 prevCollPos = position.prevPos;
-            Vector2 lastNonIntersecting = position.prevPos;
-            while ((collPos - prevCollPos).Length() >= 1)
+            from.collPos = from.position.getPosOnTrajectory(t);
+            Vector2 prevCollPos = from.position.prevPos;
+            Vector2 lastNonIntersecting = from.position.prevPos;
+            while ((from.collPos - prevCollPos).Length() >= 1)
             {
                 deltT = deltT / 2;
-                if (from.intersects(getCollisionPath()))
+                if (intersects(from.getCollisionPath()))
                 {
                     t -= deltT;
                 }
                 else
                 {
-                    lastNonIntersecting = collPos;
+                    lastNonIntersecting = from.collPos;
                     t += deltT;
                 }
-                prevCollPos = collPos;
-                collPos = position.getPosOnTrajectory(t);
+                prevCollPos = from.collPos;
+                from.collPos = from.position.getPosOnTrajectory(t);
             }
 
-            if (from.intersects(getCollisionPath()))
+            if (intersects(from.getCollisionPath()))
             {
-                collPos = lastNonIntersecting;
+                from.collPos = lastNonIntersecting;
             }
 
-            collidedWith.Add(from);
+            from.collidedWith.Add(from);
 
-            missingDelta = position.pos - collPos;
+            from.missingDelta = from.position.pos - from.collPos;
 
-            position.pos = collPos;
+            from.position.pos = from.collPos;
         }
 
         public Vector2 getPosPlusOffset()
