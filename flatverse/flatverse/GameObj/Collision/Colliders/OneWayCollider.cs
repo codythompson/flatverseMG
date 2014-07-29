@@ -26,7 +26,7 @@ namespace flatverse
 
         public override void collideAwayFrom(Collider from, bool allowAdjustment)
         {
-            if (!from.intersects(getCollisionPath()))
+            if (!intersects(from.getCollisionPath()))
             {
                 return;
             }
