@@ -15,6 +15,9 @@ namespace flatverse
 
         Dictionary<string, FVImage> textures;
 
+        public SpriteFont defaultFont;
+        public static TextDrawable DEBUG_STRING;
+
         public TextureDrawable DOT;
 
         public LineDrawable LINE_45, LINE_45_NEG, LINE_VER, LINE_HOR;
@@ -57,6 +60,12 @@ namespace flatverse
             textures["pixel"] = new FVImage(contentManager.Load<Texture2D>("1x1"), null);
             textures["block"] = new FVImage(contentManager.Load<Texture2D>("simpleBlock"), null);
             textures["window"] = new FVImage(contentManager.Load<Texture2D>("blueFramedWindow"), null);
+
+            defaultFont = contentManager.Load<SpriteFont>("monospace");
+            TestGame.DEBUG_STRING = new TextDrawable(defaultFont, " - ", 1);
+            TestGame.DEBUG_STRING.scale = new Vector2(0.25f);
+            //TestGame.DEBUG_STRING.color = Utils.colorFromUInt(0xaaffffff);
+            TestGame.DEBUG_STRING.color = Color.White;
 
             DOT = new TextureDrawable(textures["pixel"], .4f);
             LINE_45 = new LineDrawable(textures["pixel"], new Vector2(50, 50), .4f);
@@ -161,12 +170,16 @@ namespace flatverse
 
             // collision
             collMan.collide();
+
+            DEBUG_STRING.text = string.Format("{0}, {1}", main.position.pos.X, main.position.pos.Y);
         }
         public void draw(GameTime gameTime)
         {
             gd.Clear(Color.CornflowerBlue);
 
             sb.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied);
+
+            DEBUG_STRING.simpleDraw(sb, Vector2.Zero);
 
             main.draw(sb);
             foreach (GameObj other in others)

@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="flatverse\Drawable\DrawableCollection.cs" />
     <Compile Include="flatverse\Drawable\RectDrawable.cs" />
+    <Compile Include="flatverse\Drawable\TextDrawable.cs" />
     <Compile Include="flatverse\GameObj\Collision\Colliders\Collider.cs" />
     <Compile Include="flatverse\GameObj\Collision\Colliders\OneWayCollider.cs" />
     <Compile Include="flatverse\GameObj\Collision\Colliders\RectangleCollider.cs" />
