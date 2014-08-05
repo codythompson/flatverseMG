@@ -136,7 +136,7 @@ namespace flatverse
 
         public override Polygon getPrevBounds()
         {
-            prevRect.move(getPrevPosPlusOffset());
+            prevRect.moveTo(getPrevPosPlusOffset());
             return new Polygon(new Vector2[] { prevRect.topLeft(), prevRect.topRight(), prevRect.bottomRight(), prevRect.bottomLeft()});
         }
 

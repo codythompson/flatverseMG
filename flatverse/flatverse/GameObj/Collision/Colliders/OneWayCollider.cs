@@ -47,13 +47,13 @@ namespace flatverse
                     }
                     break;
                 case Direction.LEFT:
-                    if (!line.isLeftOfThis(from.getPrevBounds()))
+                    if (!line.isRightOfThis(from.getPrevBounds()))
                     {
                         return;
                     }
                     break;
                 case Direction.RIGHT:
-                    if (!line.isRightOfThis(from.getPrevBounds()))
+                    if (!line.isLeftOfThis(from.getPrevBounds()))
                     {
                         return;
                     }

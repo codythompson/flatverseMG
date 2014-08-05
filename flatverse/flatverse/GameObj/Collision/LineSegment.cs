@@ -546,12 +546,12 @@ namespace flatverse
 
             public bool isLeftOfThis(Polygon polygon)
             {
-                return polygon.bottom() <= topY && polygon.top() >= botY && polygon.right() <= x;
+                return polygon.bottom() >= topY && polygon.top() <= botY && polygon.right() <= x;
             }
 
             public bool isRightOfThis(Polygon polygon)
             {
-                return polygon.bottom() <= topY && polygon.top() >= botY && polygon.left() >= x;
+                return polygon.bottom() >= topY && polygon.top() <= botY && polygon.left() >= x;
             }
 
             public bool isVertical()
@@ -754,22 +754,54 @@ namespace flatverse
 
             public bool isAboveThis(Polygon polygon)
             {
-                return false;
+                foreach (Vector2 point in polygon.points())
+                {
+                    float yAtPt = yAt(point.X);
+                    if (!float.IsNaN(yAtPt) && yAtPt < point.Y)
+                    {
+                        return false;
+                    }
+                }
+                return true;
             }
 
             public bool isBelowThis(Polygon polygon)
             {
-                return false;
+                foreach (Vector2 point in polygon.points())
+                {
+                    float yAtPt = yAt(point.X);
+                    if (!float.IsNaN(yAtPt) && yAtPt > point.Y)
+                    {
+                        return false;
+                    }
+                }
+                return true;
             }
 
             public bool isRightOfThis(Polygon polygon)
             {
-                return false;
+                foreach (Vector2 point in polygon.points())
+                {
+                    float xAtPt = xAt(point.Y);
+                    if (!float.IsNaN(xAtPt) && xAtPt > point.X)
+                    {
+                        return false;
+                    }
+                }
+                return true;
             }
 
             public bool isLeftOfThis(Polygon polygon)
             {
-                return false;
+                foreach (Vector2 point in polygon.points())
+                {
+                    float xAtPt = xAt(point.Y);
+                    if (!float.IsNaN(xAtPt) && xAtPt < point.X)
+                    {
+                        return false;
+                    }
+                }
+                return true;
             }
 
             public bool isVertical()

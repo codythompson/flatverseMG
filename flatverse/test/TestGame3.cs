@@ -152,9 +152,9 @@ namespace flatverse
             others.Add(other);
 
             other = new GameObj(new Position(1000, 100), new Controller());
-            other.addDrawable(LINE_HOR.clone());
+            other.addDrawable(LINE_45_NEG.clone());
             other.dbls[0].color = Color.DarkOliveGreen;
-            other.addCollider(new OneWayCollider(OneWayCollider.Direction.DOWN, new Vector2(50, 0)));
+            other.addCollider(new OneWayCollider(OneWayCollider.Direction.DOWN, new Vector2(50, -50)));
             collMan.registerColliders(other, 0, true);
             others.Add(other);
         }

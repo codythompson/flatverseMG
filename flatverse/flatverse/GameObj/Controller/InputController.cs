@@ -14,6 +14,9 @@ namespace flatverse
         private bool leftDownFirst, upDownFirst;
         private bool leftDown, rightDown, upDown, downDown;
 
+        //TODO move this somewhere more customizable
+        public Vector2 vels = new Vector2(10, 10);
+
         public InputController()
         {
 
@@ -23,8 +26,6 @@ namespace flatverse
         {
             updateFlags();
 
-            //TODO move this somewhere more customizable
-            Vector2 vels = new Vector2(10, 10);
             if (leftDown)
             {
                 position.addSingleFrameVel(new Vector2(-vels.X, 0));

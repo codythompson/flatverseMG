@@ -12,9 +12,14 @@ namespace flatverse
         public static bool DEBUG_FLAG_UP = false;
         public static List<Vector2> DEBUG_POINTS = new List<Vector2>();
 
+        Vector2 oldVels;
+        Vector2 slowVels = new Vector2(1, 1);
+
         public DEBUG_CONTROLLER()
             : base()
-        {}
+        {
+            oldVels = vels;
+        }
 
         public override void update()
         {
@@ -29,7 +34,15 @@ namespace flatverse
 
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
             {
-                Debug.Print("({0}, {1})", position.pos.X, position.pos.Y);
+                if (this.vels != slowVels)
+                {
+                    oldVels = this.vels;
+                }
+                this.vels = slowVels;
+            }
+            else
+            {
+                this.vels = oldVels;
             }
 
             base.update();
